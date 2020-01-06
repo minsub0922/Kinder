@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A87876623C32B9F006A99DD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A87876523C32B9F006A99DD /* Extensions.swift */; };
 		1AF2965323BD838600A7FC7F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2965223BD838600A7FC7F /* AppDelegate.swift */; };
 		1AF2965523BD838600A7FC7F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2965423BD838600A7FC7F /* SceneDelegate.swift */; };
 		1AF2965723BD838600A7FC7F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2965623BD838600A7FC7F /* ViewController.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A87876523C32B9F006A99DD /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		1AF2964F23BD838600A7FC7F /* KElonTinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KElonTinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AF2965223BD838600A7FC7F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1AF2965423BD838600A7FC7F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -76,6 +78,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1A87876423C32B94006A99DD /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1A87876523C32B9F006A99DD /* Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		1AF2964623BD838600A7FC7F = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +109,7 @@
 		1AF2965123BD838600A7FC7F /* KElonTinder */ = {
 			isa = PBXGroup;
 			children = (
+				1A87876423C32B94006A99DD /* Extensions */,
 				1AF2965223BD838600A7FC7F /* AppDelegate.swift */,
 				1AF2965423BD838600A7FC7F /* SceneDelegate.swift */,
 				1AF2965623BD838600A7FC7F /* ViewController.swift */,
@@ -262,6 +273,7 @@
 				1AF2965723BD838600A7FC7F /* ViewController.swift in Sources */,
 				1AF2965323BD838600A7FC7F /* AppDelegate.swift in Sources */,
 				1AF2965523BD838600A7FC7F /* SceneDelegate.swift in Sources */,
+				1A87876623C32B9F006A99DD /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
