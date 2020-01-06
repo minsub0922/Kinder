@@ -9,22 +9,18 @@
 import UIKit
 
 class ViewController: UIViewController {
-    private let stackView: UIStackView = {
-        let redView = UIView()
-        redView.backgroundColor = .red
-        redView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+    private static let topStackView = TopNavigationStackView()
+    
+    private static let bottonsStackView = HomeBottomControlsStackView()
+    
+    private let overallStackView: UIStackView = {
         let blueView = UIView()
         blueView.backgroundColor = .blue
-        let yellowView = UIView()
-        yellowView.backgroundColor = .yellow
-        yellowView.heightAnchor.constraint(equalToConstant: 120).isActive = true
         
-        let stackView = UIStackView(arrangedSubviews: [redView, blueView, yellowView])
-        stackView.frame = .init(x: 0, y: 0, width: 300, height: 300)
-        //stackView.distribution = .fillEqually
-        stackView.axis = .vertical
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
+        let overallStackView = UIStackView(arrangedSubviews: [topStackView, blueView, bottonsStackView])
+        overallStackView.axis = .vertical
+        overallStackView.translatesAutoresizingMaskIntoConstraints = false
+        return overallStackView
     } ()
 
     override func viewDidLoad() {
@@ -34,12 +30,16 @@ class ViewController: UIViewController {
         activateAutolayouts()
     }
     
-    private func addSubViews() {
-        view.addSubview(stackView)
+    // MARK:- Fileprivate
+    fileprivate func addSubViews() {
+        view.addSubview(overallStackView)
     }
     
-    private func activateAutolayouts() {
-        stackView.fillSuperview()
+    fileprivate func activateAutolayouts() {
+        overallStackView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+                                leading: view.leadingAnchor,
+                                bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                                trailing: view.trailingAnchor)
     }
 }
 

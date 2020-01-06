@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1A87876623C32B9F006A99DD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A87876523C32B9F006A99DD /* Extensions.swift */; };
+		1A87876923C331D9006A99DD /* HomeBottomControlsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A87876823C331D9006A99DD /* HomeBottomControlsStackView.swift */; };
+		1A87876B23C33575006A99DD /* TopNavigationStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A87876A23C33575006A99DD /* TopNavigationStackView.swift */; };
 		1AF2965323BD838600A7FC7F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2965223BD838600A7FC7F /* AppDelegate.swift */; };
 		1AF2965523BD838600A7FC7F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2965423BD838600A7FC7F /* SceneDelegate.swift */; };
 		1AF2965723BD838600A7FC7F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2965623BD838600A7FC7F /* ViewController.swift */; };
@@ -37,6 +39,8 @@
 
 /* Begin PBXFileReference section */
 		1A87876523C32B9F006A99DD /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		1A87876823C331D9006A99DD /* HomeBottomControlsStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBottomControlsStackView.swift; sourceTree = "<group>"; };
+		1A87876A23C33575006A99DD /* TopNavigationStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNavigationStackView.swift; sourceTree = "<group>"; };
 		1AF2964F23BD838600A7FC7F /* KElonTinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KElonTinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AF2965223BD838600A7FC7F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1AF2965423BD838600A7FC7F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +90,15 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		1A87876723C331AF006A99DD /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1A87876823C331D9006A99DD /* HomeBottomControlsStackView.swift */,
+				1A87876A23C33575006A99DD /* TopNavigationStackView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		1AF2964623BD838600A7FC7F = {
 			isa = PBXGroup;
 			children = (
@@ -109,6 +122,7 @@
 		1AF2965123BD838600A7FC7F /* KElonTinder */ = {
 			isa = PBXGroup;
 			children = (
+				1A87876723C331AF006A99DD /* Views */,
 				1A87876423C32B94006A99DD /* Extensions */,
 				1AF2965223BD838600A7FC7F /* AppDelegate.swift */,
 				1AF2965423BD838600A7FC7F /* SceneDelegate.swift */,
@@ -272,6 +286,8 @@
 			files = (
 				1AF2965723BD838600A7FC7F /* ViewController.swift in Sources */,
 				1AF2965323BD838600A7FC7F /* AppDelegate.swift in Sources */,
+				1A87876923C331D9006A99DD /* HomeBottomControlsStackView.swift in Sources */,
+				1A87876B23C33575006A99DD /* TopNavigationStackView.swift in Sources */,
 				1AF2965523BD838600A7FC7F /* SceneDelegate.swift in Sources */,
 				1A87876623C32B9F006A99DD /* Extensions.swift in Sources */,
 			);
@@ -378,7 +394,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -432,7 +447,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
