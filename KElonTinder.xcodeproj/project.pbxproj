@@ -10,6 +10,7 @@
 		1A87876623C32B9F006A99DD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A87876523C32B9F006A99DD /* Extensions.swift */; };
 		1A87876923C331D9006A99DD /* HomeBottomControlsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A87876823C331D9006A99DD /* HomeBottomControlsStackView.swift */; };
 		1A87876B23C33575006A99DD /* TopNavigationStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A87876A23C33575006A99DD /* TopNavigationStackView.swift */; };
+		1A87876D23C370D5006A99DD /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A87876C23C370D5006A99DD /* CardView.swift */; };
 		1AF2965323BD838600A7FC7F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2965223BD838600A7FC7F /* AppDelegate.swift */; };
 		1AF2965523BD838600A7FC7F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2965423BD838600A7FC7F /* SceneDelegate.swift */; };
 		1AF2965723BD838600A7FC7F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2965623BD838600A7FC7F /* ViewController.swift */; };
@@ -41,6 +42,7 @@
 		1A87876523C32B9F006A99DD /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		1A87876823C331D9006A99DD /* HomeBottomControlsStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBottomControlsStackView.swift; sourceTree = "<group>"; };
 		1A87876A23C33575006A99DD /* TopNavigationStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNavigationStackView.swift; sourceTree = "<group>"; };
+		1A87876C23C370D5006A99DD /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		1AF2964F23BD838600A7FC7F /* KElonTinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KElonTinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AF2965223BD838600A7FC7F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1AF2965423BD838600A7FC7F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 			children = (
 				1A87876823C331D9006A99DD /* HomeBottomControlsStackView.swift */,
 				1A87876A23C33575006A99DD /* TopNavigationStackView.swift */,
+				1A87876C23C370D5006A99DD /* CardView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -284,6 +287,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A87876D23C370D5006A99DD /* CardView.swift in Sources */,
 				1AF2965723BD838600A7FC7F /* ViewController.swift in Sources */,
 				1AF2965323BD838600A7FC7F /* AppDelegate.swift in Sources */,
 				1A87876923C331D9006A99DD /* HomeBottomControlsStackView.swift in Sources */,

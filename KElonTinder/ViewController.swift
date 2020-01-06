@@ -9,15 +9,14 @@
 import UIKit
 
 class ViewController: UIViewController {
-    private static let topStackView = TopNavigationStackView()
-    
-    private static let bottonsStackView = HomeBottomControlsStackView()
-    
+    private let topStackView = TopNavigationStackView()
+    private let bottonsStackView = HomeBottomControlsStackView()
+    private let cardDeckView: UIView = {
+        let view = UIView()
+        return view
+    } ()
     private let overallStackView: UIStackView = {
-        let blueView = UIView()
-        blueView.backgroundColor = .blue
-        
-        let overallStackView = UIStackView(arrangedSubviews: [topStackView, blueView, bottonsStackView])
+        let overallStackView = UIStackView()
         overallStackView.axis = .vertical
         overallStackView.translatesAutoresizingMaskIntoConstraints = false
         return overallStackView
@@ -26,20 +25,32 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addSubViews()
-        activateAutolayouts()
+        setupLayout()
+        setupDummyCards()
     }
     
     // MARK:- Fileprivate
-    fileprivate func addSubViews() {
-        view.addSubview(overallStackView)
+    fileprivate func setupDummyCards() {
+        let cardview = CardView(frame: .zero)
+        cardDeckView.addSubview(cardview)
+        cardview.fillSuperview()
     }
     
-    fileprivate func activateAutolayouts() {
+    fileprivate func setupLayout() {
+        view.addSubview(overallStackView)
+        
+        [topStackView, cardDeckView, bottonsStackView].forEach { view in
+            overallStackView.addArrangedSubview(view)
+        }
+        
         overallStackView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
                                 leading: view.leadingAnchor,
                                 bottom: view.safeAreaLayoutGuide.bottomAnchor,
                                 trailing: view.trailingAnchor)
+        
+        overallStackView.isLayoutMarginsRelativeArrangement = true
+        overallStackView.layoutMargins = .init(top: 0, left: 12, bottom: 0, right: 12)
+        overallStackView.bringSubviewToFront(cardDeckView)
     }
 }
 
