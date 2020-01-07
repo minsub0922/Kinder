@@ -17,6 +17,7 @@ class CardView: UIView {
         }
     }
     
+    fileprivate let gradientLayer = CAGradientLayer()
     fileprivate let imageview = UIImageView(image: #imageLiteral(resourceName: "lady5c"))
     fileprivate let informationLabel: UILabel = {
         let label = UILabel()
@@ -31,6 +32,12 @@ class CardView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupLayout()
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(gesture:)))
+        addGestureRecognizer(panGesture)
+    }
+    
+    fileprivate func setupLayout() {
         // custom drawing code
         layer.cornerRadius = 10
         clipsToBounds = true
@@ -39,11 +46,19 @@ class CardView: UIView {
         addSubview(imageview)
         imageview.fillSuperview()
         
+        // add a gradient later somehow
+        setupFradientLayer()
+        
         addSubview(informationLabel)
         informationLabel.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 16, bottom: 16, right: 16))
-        
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(gesture:)))
-        addGestureRecognizer(panGesture)
+    }
+    
+    fileprivate func setupFradientLayer() {
+        // draw a gradient
+        gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
+        gradientLayer.locations = [0.5, 1.1]
+        // self.frame is actually zero frame
+        layer.addSublayer(gradientLayer)
     }
     
     @objc fileprivate func handlePan(gesture: UIPanGestureRecognizer) {
@@ -55,6 +70,11 @@ class CardView: UIView {
         default:
             ()
         }
+    }
+    
+    override func layoutSubviews() {
+        // we can know CardView Frame will be
+        gradientLayer.frame = self.frame
     }
     
     fileprivate func handleChagned(_ gesture: UIPanGestureRecognizer) {

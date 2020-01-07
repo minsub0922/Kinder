@@ -31,7 +31,15 @@ class HomeController: UIViewController {
                  imageName: "lady4c"),
             Advertiser(title: "Slide Out Menu",
                        brandName: "Korean Elon",
-                       posterPhotoName: "slide_out_menu_poster")
+                       posterPhotoName: "slide_out_menu_poster"),
+            User(name: "Kelly",
+                          age: 23,
+                          profession: "Music DJ",
+                          imageName: "lady5c"),
+            User(name: "Kelly",
+                          age: 23,
+                          profession: "Music DJ",
+                          imageName: "lady5c")
         ]
         
         let viewModels = producers.map({ $0.toCardViewModel() })
