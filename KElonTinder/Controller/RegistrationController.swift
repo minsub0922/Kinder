@@ -80,27 +80,25 @@ class RegistrationController: UIViewController {
         return button
     }()
     
+    let registeringHUD = JGProgressHUD(style: .dark)
+    
     @objc fileprivate func handleRegister() {
         self.handleTapDismiss()
-        guard
-            let email = emailTextField.text,
-            let password = passwordTextField.text
-            else { return }
         
-        Auth.auth().createUser(withEmail: email,
-                               password: password) { (res, err) in
-                                
-                                if let err = err {
-                                    print(err)
-                                    self.showHUDWithError(error: err)
-                                    return
-                                }
-                                
-                                print("Successfully registered user: \(res?.user.uid ?? "")")
+        registrationViewModel.performregistration { err in
+            if let err = err {
+                self.showHUDWithError(error: err)
+                return
+            }
+            
+            print("Finished registering our user")
         }
+       
     }
     
     fileprivate func showHUDWithError(error: Error) {
+        registeringHUD.dismiss()
+        
         let hud = JGProgressHUD(style: .dark)
         hud.textLabel.text = "Failed registration"
         hud.detailTextLabel.text = error.localizedDescription
@@ -120,6 +118,18 @@ class RegistrationController: UIViewController {
         setupRegistrationViewModelObserver()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        //NotificationCenter.default.removeObserver(self) // otherwise u will have a retain cycle !
+    }
+    
+    let gradientLayer = CAGradientLayer()
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        gradientLayer.frame = view.bounds
+    }
+    
+    // MARK:- fileprivate
     let registrationViewModel = RegistrationViewModel()
     
     fileprivate func setupRegistrationViewModelObserver() {
@@ -129,29 +139,21 @@ class RegistrationController: UIViewController {
             self.registerButton.backgroundColor = isFormValid ? #colorLiteral(red: 0.8235294118, green: 0, blue: 0.3254901961, alpha: 1) : .lightGray
             self.registerButton.setTitleColor(isFormValid ? .white : .darkGray, for: .normal)
         }
-//        registrationViewModel.isFormValidObserver = { [unowned self] isFormValid in
-//            self.registerButton.isEnabled = isFormValid
-//            self.registerButton.backgroundColor = isFormValid ? #colorLiteral(red: 0.8235294118, green: 0, blue: 0.3254901961, alpha: 1) : .lightGray
-//            self.registerButton.setTitleColor(isFormValid ? .white : .darkGray, for: .normal)
-//        }
         
         registrationViewModel.bindableImage.bind { [unowned self] img in
             self.selectPhotoButton.setImage(img?.withRenderingMode(.alwaysOriginal), for: .normal)
         }
+        
+        registrationViewModel.bindableIsRegistering.bind { isRegisering in
+            if isRegisering == true {
+                self.registeringHUD.textLabel.text = "Register"
+                self.registeringHUD.show(in: self.view)
+            } else {
+                self.registeringHUD.dismiss()
+            }
+        }
     }
     
-    let gradientLayer = CAGradientLayer()
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        gradientLayer.frame = view.bounds
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self) // otherwise u will have a retain cycle !
-    }
-    
-    // MARK:- fileprivate
     
     fileprivate func setupTapGesture() {
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapDismiss)))
