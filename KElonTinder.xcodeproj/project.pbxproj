@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1A533B7C23C4702300A6DF35 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A533B7B23C4702300A6DF35 /* GoogleService-Info.plist */; };
+		1A533B7E23C496D200A6DF35 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A533B7D23C496D200A6DF35 /* Bindable.swift */; };
 		1A58A9EB23C42397002D40E1 /* Advertiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58A9EA23C42397002D40E1 /* Advertiser.swift */; };
 		1A58A9ED23C44FD2002D40E1 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58A9EC23C44FD2002D40E1 /* RegistrationController.swift */; };
 		1A58A9EF23C454D2002D40E1 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58A9EE23C454D2002D40E1 /* CustomTextField.swift */; };
@@ -50,6 +51,7 @@
 
 /* Begin PBXFileReference section */
 		1A533B7B23C4702300A6DF35 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1A533B7D23C496D200A6DF35 /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 		1A58A9EA23C42397002D40E1 /* Advertiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertiser.swift; sourceTree = "<group>"; };
 		1A58A9EC23C44FD2002D40E1 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		1A58A9EE23C454D2002D40E1 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 			children = (
 				1AF2965623BD838600A7FC7F /* HomeController.swift */,
 				1A58A9EC23C44FD2002D40E1 /* RegistrationController.swift */,
+				1A533B7D23C496D200A6DF35 /* Bindable.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -489,6 +492,7 @@
 				1A87877023C41146006A99DD /* User.swift in Sources */,
 				1A58A9ED23C44FD2002D40E1 /* RegistrationController.swift in Sources */,
 				1A87876B23C33575006A99DD /* TopNavigationStackView.swift in Sources */,
+				1A533B7E23C496D200A6DF35 /* Bindable.swift in Sources */,
 				1A58A9EF23C454D2002D40E1 /* CustomTextField.swift in Sources */,
 				1A58A9F123C46403002D40E1 /* RegistrationViewModel.swift in Sources */,
 				1AF2965523BD838600A7FC7F /* SceneDelegate.swift in Sources */,

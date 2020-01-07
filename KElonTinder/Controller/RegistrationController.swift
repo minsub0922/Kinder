@@ -20,10 +20,12 @@ class RegistrationController: UIViewController {
         button.backgroundColor = .white
         button.setTitleColor(.black, for: .normal)
         button.heightAnchor.constraint(equalToConstant: 275).isActive = true
+        button.addTarget(self, action: #selector(handleSelectPhoto), for: .touchUpInside)
         button.layer.cornerRadius = 16
+        button.imageView?.contentMode = .scaleAspectFill
+        button.clipsToBounds = true
         return button
     }()
-    
     let fullNameTextField: CustomTextField = {
         let textField = CustomTextField(padding: 24)
         textField.placeholder = "Enter full name"
@@ -44,6 +46,12 @@ class RegistrationController: UIViewController {
         textField.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         return textField
     }()
+    
+    @objc fileprivate func handleSelectPhoto() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        present(imagePickerController, animated: true)
+    }
     
     @objc fileprivate func handleTextChange(textField: UITextField) {        
         switch textField {
@@ -115,10 +123,20 @@ class RegistrationController: UIViewController {
     let registrationViewModel = RegistrationViewModel()
     
     fileprivate func setupRegistrationViewModelObserver() {
-        registrationViewModel.isFormValidObserver = { [unowned self] isFormValid in
+        registrationViewModel.bindableIsFormValid.bind {  [unowned self] isFormValid in
+            guard let isFormValid = isFormValid else {return}
             self.registerButton.isEnabled = isFormValid
             self.registerButton.backgroundColor = isFormValid ? #colorLiteral(red: 0.8235294118, green: 0, blue: 0.3254901961, alpha: 1) : .lightGray
             self.registerButton.setTitleColor(isFormValid ? .white : .darkGray, for: .normal)
+        }
+//        registrationViewModel.isFormValidObserver = { [unowned self] isFormValid in
+//            self.registerButton.isEnabled = isFormValid
+//            self.registerButton.backgroundColor = isFormValid ? #colorLiteral(red: 0.8235294118, green: 0, blue: 0.3254901961, alpha: 1) : .lightGray
+//            self.registerButton.setTitleColor(isFormValid ? .white : .darkGray, for: .normal)
+//        }
+        
+        registrationViewModel.bindableImage.bind { [unowned self] img in
+            self.selectPhotoButton.setImage(img?.withRenderingMode(.alwaysOriginal), for: .normal)
         }
     }
     
@@ -218,5 +236,17 @@ class RegistrationController: UIViewController {
         gradientLayer.locations = [0, 1]
         view.layer.addSublayer(gradientLayer)
         gradientLayer.frame = view.bounds
+    }
+}
+
+extension RegistrationController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let image = info[.originalImage] as? UIImage
+        registrationViewModel.bindableImage.value = image
+        dismiss(animated: true)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true)
     }
 }
