@@ -18,17 +18,25 @@ class HomeController: UIViewController {
         overallStackView.translatesAutoresizingMaskIntoConstraints = false
         return overallStackView
     } ()
-
-    let users = [
-        User(name: "Kelly", age: 23, profession: "Music DJ", imageName: "lady5c"),
-        User(name: "Jane", age: 18, profession: "Teacher", imageName: "lady4c")
-    ]
     
-    let cardViewModels = [
-        User(name: "Kelly", age: 23, profession: "Music DJ", imageName: "lady5c").toCardViewModel(),
-        User(name: "Jane", age: 18, profession: "Teacher", imageName: "lady4c").toCardViewModel()
-        //CardViewModel(imageName: "lady5c", attributedString: <#T##NSAttributedString#>, textAlignment: <#T##NSTextAlignment#>)
-    ]
+    let cardViewModels: [CardViewModel] = {
+        let producers: [ProducesCardViewModel] = [
+            User(name: "Kelly",
+                 age: 23,
+                 profession: "Music DJ",
+                 imageName: "lady5c"),
+            User(name: "Jane",
+                 age: 18,
+                 profession: "Teacher",
+                 imageName: "lady4c"),
+            Advertiser(title: "Slide Out Menu",
+                       brandName: "Korean Elon",
+                       posterPhotoName: "slide_out_menu_poster")
+        ]
+        
+        let viewModels = producers.map({ $0.toCardViewModel() })
+        return viewModels
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,9 +49,7 @@ class HomeController: UIViewController {
     fileprivate func setupDummyCards() {
         cardViewModels.forEach { cardViewModel in
             let cardView = CardView(frame: .zero)
-            cardView.imageview.image = UIImage(named: cardViewModel.imageName)
-            cardView.informationLabel.attributedText = cardViewModel.attributedString
-            cardView.informationLabel.textAlignment = cardViewModel.textAlignment
+            cardView.cardViewModel = cardViewModel
             cardDeckView.addSubview(cardView)
             cardView.fillSuperview()
         }

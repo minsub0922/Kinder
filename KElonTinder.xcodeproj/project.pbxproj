@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A58A9EB23C42397002D40E1 /* Advertiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58A9EA23C42397002D40E1 /* Advertiser.swift */; };
 		1A87876623C32B9F006A99DD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A87876523C32B9F006A99DD /* Extensions.swift */; };
 		1A87876923C331D9006A99DD /* HomeBottomControlsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A87876823C331D9006A99DD /* HomeBottomControlsStackView.swift */; };
 		1A87876B23C33575006A99DD /* TopNavigationStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A87876A23C33575006A99DD /* TopNavigationStackView.swift */; };
@@ -41,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A58A9EA23C42397002D40E1 /* Advertiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertiser.swift; sourceTree = "<group>"; };
 		1A87876523C32B9F006A99DD /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		1A87876823C331D9006A99DD /* HomeBottomControlsStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBottomControlsStackView.swift; sourceTree = "<group>"; };
 		1A87876A23C33575006A99DD /* TopNavigationStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNavigationStackView.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				1A87876F23C41146006A99DD /* User.swift */,
+				1A58A9EA23C42397002D40E1 /* Advertiser.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -317,6 +320,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A58A9EB23C42397002D40E1 /* Advertiser.swift in Sources */,
 				1A87876D23C370D5006A99DD /* CardView.swift in Sources */,
 				1AF2965723BD838600A7FC7F /* HomeController.swift in Sources */,
 				1AF2965323BD838600A7FC7F /* AppDelegate.swift in Sources */,

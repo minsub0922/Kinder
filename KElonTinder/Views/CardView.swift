@@ -9,8 +9,16 @@
 import UIKit
 
 class CardView: UIView {
-    let imageview = UIImageView(image: #imageLiteral(resourceName: "lady5c"))
-    let informationLabel: UILabel = {
+    var cardViewModel: CardViewModel! {
+        didSet {
+            imageview.image = UIImage(named: cardViewModel.imageName)
+            informationLabel.attributedText = cardViewModel.attributedString
+            informationLabel.textAlignment = cardViewModel.textAlignment
+        }
+    }
+    
+    fileprivate let imageview = UIImageView(image: #imageLiteral(resourceName: "lady5c"))
+    fileprivate let informationLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.textColor = .white
