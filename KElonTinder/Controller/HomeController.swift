@@ -24,6 +24,12 @@ class HomeController: UIViewController {
         User(name: "Jane", age: 18, profession: "Teacher", imageName: "lady4c")
     ]
     
+    let cardViewModels = [
+        User(name: "Kelly", age: 23, profession: "Music DJ", imageName: "lady5c").toCardViewModel(),
+        User(name: "Jane", age: 18, profession: "Teacher", imageName: "lady4c").toCardViewModel()
+        //CardViewModel(imageName: "lady5c", attributedString: <#T##NSAttributedString#>, textAlignment: <#T##NSTextAlignment#>)
+    ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,18 +39,13 @@ class HomeController: UIViewController {
     
     // MARK:- Fileprivate
     fileprivate func setupDummyCards() {
-        users.forEach { user in
-            let cardview = CardView(frame: .zero)
-            cardview.imageview.image = UIImage(named: user.imageName)
-            cardview.informationLabel.text = "\(user.name) \(user.age)\n\(user.profession)"
-            
-            let attributedText = NSMutableAttributedString(string: user.name, attributes: [.font: UIFont.systemFont(ofSize: 32, weight: .heavy)])
-            attributedText.append(NSAttributedString(string: " \(user.age)", attributes: [.font: UIFont.systemFont(ofSize: 24, weight: .light)]))
-            attributedText.append(NSAttributedString(string: "\n\(user.profession)", attributes: [.font: UIFont.systemFont(ofSize: 24, weight: .light)]))
-            cardview.informationLabel.attributedText = attributedText
-            
-            cardDeckView.addSubview(cardview)
-            cardview.fillSuperview()
+        cardViewModels.forEach { cardViewModel in
+            let cardView = CardView(frame: .zero)
+            cardView.imageview.image = UIImage(named: cardViewModel.imageName)
+            cardView.informationLabel.attributedText = cardViewModel.attributedString
+            cardView.informationLabel.textAlignment = cardViewModel.textAlignment
+            cardDeckView.addSubview(cardView)
+            cardView.fillSuperview()
         }
     }
     
