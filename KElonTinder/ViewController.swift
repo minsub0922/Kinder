@@ -11,10 +11,7 @@ import UIKit
 class ViewController: UIViewController {
     private let topStackView = TopNavigationStackView()
     private let bottonsStackView = HomeBottomControlsStackView()
-    private let cardDeckView: UIView = {
-        let view = UIView()
-        return view
-    } ()
+    private let cardDeckView = UIView()
     private let overallStackView: UIStackView = {
         let overallStackView = UIStackView()
         overallStackView.axis = .vertical
