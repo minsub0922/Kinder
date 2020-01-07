@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import JGProgressHUD
 
 class RegistrationController: UIViewController {
 
@@ -66,8 +68,37 @@ class RegistrationController: UIViewController {
         button.isEnabled = false
         button.heightAnchor.constraint(equalToConstant: 44).isActive = true
         button.layer.cornerRadius = 22
+        button.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
         return button
     }()
+    
+    @objc fileprivate func handleRegister() {
+        self.handleTapDismiss()
+        guard
+            let email = emailTextField.text,
+            let password = passwordTextField.text
+            else { return }
+        
+        Auth.auth().createUser(withEmail: email,
+                               password: password) { (res, err) in
+                                
+                                if let err = err {
+                                    print(err)
+                                    self.showHUDWithError(error: err)
+                                    return
+                                }
+                                
+                                print("Successfully registered user: \(res?.user.uid ?? "")")
+        }
+    }
+    
+    fileprivate func showHUDWithError(error: Error) {
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text = "Failed registration"
+        hud.detailTextLabel.text = error.localizedDescription
+        hud.show(in: self.view)
+        hud.dismiss(afterDelay: 4)
+    }
     
     // MARK:- view life cycle
     
@@ -116,7 +147,7 @@ class RegistrationController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    @objc fileprivate func handleTapDismiss(_: UITapGestureRecognizer) {
+    @objc fileprivate func handleTapDismiss() {
         self.view.endEditing(true)  // dismisses keyboard
     }
     
