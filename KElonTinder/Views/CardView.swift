@@ -9,7 +9,14 @@
 import UIKit
 
 class CardView: UIView {
-    fileprivate let imageview = UIImageView(image: #imageLiteral(resourceName: "lady5c"))
+    let imageview = UIImageView(image: #imageLiteral(resourceName: "lady5c"))
+    let informationLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 34, weight: .heavy)
+        return label
+    } ()
     
     // Configurations
     fileprivate let threshold: CGFloat = 80
@@ -20,8 +27,12 @@ class CardView: UIView {
         layer.cornerRadius = 10
         clipsToBounds = true
         
+        imageview.contentMode = .scaleAspectFill
         addSubview(imageview)
         imageview.fillSuperview()
+        
+        addSubview(informationLabel)
+        informationLabel.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 16, bottom: 16, right: 16))
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(gesture:)))
         addGestureRecognizer(panGesture)
@@ -67,10 +78,9 @@ class CardView: UIView {
                         }
         }) { (_) in
             self.transform = .identity
-            self.frame = CGRect(x: 0,
-                                y: 0,
-                                width: self.superview!.frame.width,
-                                height: self.superview!.frame.height)
+            if shouldDismissCard {
+                self.removeFromSuperview()
+            }
         }
     }
     

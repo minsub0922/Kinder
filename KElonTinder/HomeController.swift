@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class HomeController: UIViewController {
     private let topStackView = TopNavigationStackView()
     private let bottonsStackView = HomeBottomControlsStackView()
     private let cardDeckView = UIView()
@@ -19,6 +19,11 @@ class ViewController: UIViewController {
         return overallStackView
     } ()
 
+    let users = [
+        User(name: "Kelly", age: 23, profession: "Music DJ", imageName: "lady5c"),
+        User(name: "Jane", age: 18, profession: "Teacher", imageName: "lady4c")
+    ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,9 +33,19 @@ class ViewController: UIViewController {
     
     // MARK:- Fileprivate
     fileprivate func setupDummyCards() {
-        let cardview = CardView(frame: .zero)
-        cardDeckView.addSubview(cardview)
-        cardview.fillSuperview()
+        users.forEach { user in
+            let cardview = CardView(frame: .zero)
+            cardview.imageview.image = UIImage(named: user.imageName)
+            cardview.informationLabel.text = "\(user.name) \(user.age)\n\(user.profession)"
+            
+            let attributedText = NSMutableAttributedString(string: user.name, attributes: [.font: UIFont.systemFont(ofSize: 32, weight: .heavy)])
+            attributedText.append(NSAttributedString(string: " \(user.age)", attributes: [.font: UIFont.systemFont(ofSize: 24, weight: .light)]))
+            attributedText.append(NSAttributedString(string: "\n\(user.profession)", attributes: [.font: UIFont.systemFont(ofSize: 24, weight: .light)]))
+            cardview.informationLabel.attributedText = attributedText
+            
+            cardDeckView.addSubview(cardview)
+            cardview.fillSuperview()
+        }
     }
     
     fileprivate func setupLayout() {
