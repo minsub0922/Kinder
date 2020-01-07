@@ -25,26 +25,46 @@ class RegistrationController: UIViewController {
     let fullNameTextField: CustomTextField = {
         let textField = CustomTextField(padding: 24)
         textField.placeholder = "Enter full name"
+        textField.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         return textField
     }()
     let emailTextField: CustomTextField = {
         let textField = CustomTextField(padding: 24)
         textField.placeholder = "Enter email"
         textField.keyboardType = .emailAddress
+        textField.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         return textField
     }()
     let passwordTextField: CustomTextField = {
         let textField = CustomTextField(padding: 24)
         textField.placeholder = "Enter password"
         textField.isSecureTextEntry = true
+        textField.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         return textField
     }()
+    
+    @objc fileprivate func handleTextChange(textField: UITextField) {        
+        switch textField {
+        case fullNameTextField:
+            registrationViewModel.fullName = textField.text
+        case emailTextField:
+            registrationViewModel.email = textField.text
+        case passwordTextField:
+            registrationViewModel.password = textField.text
+        default:
+            ()
+        }
+    }
+    
     let registerButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Register", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
-        button.backgroundColor = #colorLiteral(red: 0.8235294118, green: 0, blue: 0.3254901961, alpha: 1)
+        //button.backgroundColor = #colorLiteral(red: 0.8235294118, green: 0, blue: 0.3254901961, alpha: 1)
+        button.backgroundColor = .lightGray
+        button.setTitleColor(.darkGray, for: .disabled)
+        button.isEnabled = false
         button.heightAnchor.constraint(equalToConstant: 44).isActive = true
         button.layer.cornerRadius = 22
         return button
@@ -59,6 +79,17 @@ class RegistrationController: UIViewController {
         setupLayout()
         setupNotificationObservers()
         setupTapGesture()
+        setupRegistrationViewModelObserver()
+    }
+    
+    let registrationViewModel = RegistrationViewModel()
+    
+    fileprivate func setupRegistrationViewModelObserver() {
+        registrationViewModel.isFormValidObserver = { [unowned self] isFormValid in
+            self.registerButton.isEnabled = isFormValid
+            self.registerButton.backgroundColor = isFormValid ? #colorLiteral(red: 0.8235294118, green: 0, blue: 0.3254901961, alpha: 1) : .lightGray
+            self.registerButton.setTitleColor(isFormValid ? .white : .darkGray, for: .normal)
+        }
     }
     
     let gradientLayer = CAGradientLayer()
@@ -129,8 +160,8 @@ class RegistrationController: UIViewController {
         verticalStackView
     ])
     
+    // detect orientation did change
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        
         overallStackView.axis =
             self.traitCollection.verticalSizeClass == .compact
             ? .horizontal : .vertical
