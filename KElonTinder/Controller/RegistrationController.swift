@@ -84,7 +84,6 @@ class RegistrationController: UIViewController {
     
     @objc fileprivate func handleRegister() {
         self.handleTapDismiss()
-        
         registrationViewModel.performregistration { err in
             if let err = err {
                 self.showHUDWithError(error: err)
@@ -92,8 +91,8 @@ class RegistrationController: UIViewController {
             }
             
             print("Finished registering our user")
+            
         }
-       
     }
     
     fileprivate func showHUDWithError(error: Error) {
