@@ -56,12 +56,15 @@ class RegistrationController: UIViewController {
         super.viewDidLoad()
         
         setupGradientLayer()
-        
         setupLayout()
-        
         setupNotificationObservers()
-        
         setupTapGesture()
+    }
+    
+    let gradientLayer = CAGradientLayer()
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        gradientLayer.frame = view.bounds
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -101,34 +104,53 @@ class RegistrationController: UIViewController {
         let keyboardFrame = value.cgRectValue
         
         // figure out how tall the gap is from the register buton to the buttom of the screen
-        let bottomSpace = view.frame.height - stackView.frame.origin.y - stackView.frame.height
+        let bottomSpace = view.frame.height - overallStackView.frame.origin.y - overallStackView.frame.height
         let difference = keyboardFrame.height - bottomSpace
         self.view.transform = CGAffineTransform(translationX: 0, y: -difference - 8)
     }
+    
+    lazy var verticalStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [
+            fullNameTextField,
+            emailTextField,
+            passwordTextField,
+            registerButton
+        ])
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.spacing = 8
+        return stackView
+    }()
+    
+        
 
-    lazy var stackView = UIStackView(arrangedSubviews: [
+    lazy var overallStackView = UIStackView(arrangedSubviews: [
         selectPhotoButton,
-        fullNameTextField,
-        emailTextField,
-        passwordTextField,
-        registerButton
+        verticalStackView
     ])
     
-    fileprivate func setupLayout() {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         
-        view.addSubview(stackView)
-        stackView.axis = .vertical
-        stackView.spacing = 8
-        stackView.anchor(top: nil,
+        overallStackView.axis =
+            self.traitCollection.verticalSizeClass == .compact
+            ? .horizontal : .vertical
+    }
+    
+    fileprivate func setupLayout() {
+        view.addSubview(overallStackView)
+        
+        overallStackView.axis = .vertical
+        selectPhotoButton.widthAnchor.constraint(equalToConstant: 275).isActive = true
+        overallStackView.spacing = 8
+        overallStackView.anchor(top: nil,
                          leading: view.leadingAnchor,
                          bottom: nil,
                          trailing: view.trailingAnchor,
                          padding: .init(top: 0, left: 40, bottom: 0, right: 40))
-        stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        overallStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
     
     fileprivate func setupGradientLayer() {
-        let gradientLayer = CAGradientLayer()
         let topColor = #colorLiteral(red: 0.9921568627, green: 0.3568627451, blue: 0.3725490196, alpha: 1)
         let bottomColor = #colorLiteral(red: 0.8980392157, green: 0, blue: 0.4470588235, alpha: 1)
         gradientLayer.colors = [topColor.cgColor, bottomColor.cgColor]
