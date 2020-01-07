@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A533B7C23C4702300A6DF35 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A533B7B23C4702300A6DF35 /* GoogleService-Info.plist */; };
 		1A58A9EB23C42397002D40E1 /* Advertiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58A9EA23C42397002D40E1 /* Advertiser.swift */; };
 		1A58A9ED23C44FD2002D40E1 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58A9EC23C44FD2002D40E1 /* RegistrationController.swift */; };
 		1A58A9EF23C454D2002D40E1 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58A9EE23C454D2002D40E1 /* CustomTextField.swift */; };
@@ -25,6 +26,9 @@
 		1AF2965F23BD838800A7FC7F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AF2965D23BD838800A7FC7F /* LaunchScreen.storyboard */; };
 		1AF2966A23BD838800A7FC7F /* KElonTinderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2966923BD838800A7FC7F /* KElonTinderTests.swift */; };
 		1AF2967523BD838800A7FC7F /* KElonTinderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2967423BD838800A7FC7F /* KElonTinderUITests.swift */; };
+		32B44DAFCDB8F99F1829987D /* Pods_KElonTinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A5B39814B6210EE35823409 /* Pods_KElonTinder.framework */; };
+		D03E18D8C6A764EEAA9D7C24 /* Pods_KElonTinder_KElonTinderUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE7312CF20506088344FDEBB /* Pods_KElonTinder_KElonTinderUITests.framework */; };
+		FBC7C2FE0982A4FACC80BDD4 /* Pods_KElonTinderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FE5F75108393A8D217E9054 /* Pods_KElonTinderTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A533B7B23C4702300A6DF35 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1A58A9EA23C42397002D40E1 /* Advertiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertiser.swift; sourceTree = "<group>"; };
 		1A58A9EC23C44FD2002D40E1 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		1A58A9EE23C454D2002D40E1 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
@@ -69,6 +74,15 @@
 		1AF2967023BD838800A7FC7F /* KElonTinderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KElonTinderUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AF2967423BD838800A7FC7F /* KElonTinderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KElonTinderUITests.swift; sourceTree = "<group>"; };
 		1AF2967623BD838800A7FC7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1D2155D9EF03604AD547BAB0 /* Pods-KElonTinderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KElonTinderTests.release.xcconfig"; path = "Target Support Files/Pods-KElonTinderTests/Pods-KElonTinderTests.release.xcconfig"; sourceTree = "<group>"; };
+		3FE5F75108393A8D217E9054 /* Pods_KElonTinderTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KElonTinderTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		404034AF47B16804AAA6B1E9 /* Pods-KElonTinder-KElonTinderUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KElonTinder-KElonTinderUITests.release.xcconfig"; path = "Target Support Files/Pods-KElonTinder-KElonTinderUITests/Pods-KElonTinder-KElonTinderUITests.release.xcconfig"; sourceTree = "<group>"; };
+		42BC636D2407D30F23C228FC /* Pods-KElonTinder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KElonTinder.debug.xcconfig"; path = "Target Support Files/Pods-KElonTinder/Pods-KElonTinder.debug.xcconfig"; sourceTree = "<group>"; };
+		5A5B39814B6210EE35823409 /* Pods_KElonTinder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KElonTinder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		75AB6709AEE57F092483373F /* Pods-KElonTinderTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KElonTinderTests.debug.xcconfig"; path = "Target Support Files/Pods-KElonTinderTests/Pods-KElonTinderTests.debug.xcconfig"; sourceTree = "<group>"; };
+		B2BF3373709A5A866FEB594D /* Pods-KElonTinder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KElonTinder.release.xcconfig"; path = "Target Support Files/Pods-KElonTinder/Pods-KElonTinder.release.xcconfig"; sourceTree = "<group>"; };
+		CB4B5678F245E1C8619A7840 /* Pods-KElonTinder-KElonTinderUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KElonTinder-KElonTinderUITests.debug.xcconfig"; path = "Target Support Files/Pods-KElonTinder-KElonTinderUITests/Pods-KElonTinder-KElonTinderUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		DE7312CF20506088344FDEBB /* Pods_KElonTinder_KElonTinderUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KElonTinder_KElonTinderUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32B44DAFCDB8F99F1829987D /* Pods_KElonTinder.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBC7C2FE0982A4FACC80BDD4 /* Pods_KElonTinderTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,6 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D03E18D8C6A764EEAA9D7C24 /* Pods_KElonTinder_KElonTinderUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,6 +166,8 @@
 				1AF2966823BD838800A7FC7F /* KElonTinderTests */,
 				1AF2967323BD838800A7FC7F /* KElonTinderUITests */,
 				1AF2965023BD838600A7FC7F /* Products */,
+				538F8F6866A9936542F6D391 /* Pods */,
+				FAA39D96CB285E99F14723E1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -176,6 +195,7 @@
 				1AF2965B23BD838800A7FC7F /* Assets.xcassets */,
 				1AF2965D23BD838800A7FC7F /* LaunchScreen.storyboard */,
 				1AF2966023BD838800A7FC7F /* Info.plist */,
+				1A533B7B23C4702300A6DF35 /* GoogleService-Info.plist */,
 			);
 			path = KElonTinder;
 			sourceTree = "<group>";
@@ -198,6 +218,29 @@
 			path = KElonTinderUITests;
 			sourceTree = "<group>";
 		};
+		538F8F6866A9936542F6D391 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				42BC636D2407D30F23C228FC /* Pods-KElonTinder.debug.xcconfig */,
+				B2BF3373709A5A866FEB594D /* Pods-KElonTinder.release.xcconfig */,
+				CB4B5678F245E1C8619A7840 /* Pods-KElonTinder-KElonTinderUITests.debug.xcconfig */,
+				404034AF47B16804AAA6B1E9 /* Pods-KElonTinder-KElonTinderUITests.release.xcconfig */,
+				75AB6709AEE57F092483373F /* Pods-KElonTinderTests.debug.xcconfig */,
+				1D2155D9EF03604AD547BAB0 /* Pods-KElonTinderTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		FAA39D96CB285E99F14723E1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5A5B39814B6210EE35823409 /* Pods_KElonTinder.framework */,
+				DE7312CF20506088344FDEBB /* Pods_KElonTinder_KElonTinderUITests.framework */,
+				3FE5F75108393A8D217E9054 /* Pods_KElonTinderTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -205,9 +248,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1AF2967923BD838800A7FC7F /* Build configuration list for PBXNativeTarget "KElonTinder" */;
 			buildPhases = (
+				7F7918A3740A795823D6789E /* [CP] Check Pods Manifest.lock */,
 				1AF2964B23BD838600A7FC7F /* Sources */,
 				1AF2964C23BD838600A7FC7F /* Frameworks */,
 				1AF2964D23BD838600A7FC7F /* Resources */,
+				5E7E00DF336139BD2356843D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -222,6 +267,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1AF2967C23BD838800A7FC7F /* Build configuration list for PBXNativeTarget "KElonTinderTests" */;
 			buildPhases = (
+				54028A3C37FA88AFFDA3038B /* [CP] Check Pods Manifest.lock */,
 				1AF2966123BD838800A7FC7F /* Sources */,
 				1AF2966223BD838800A7FC7F /* Frameworks */,
 				1AF2966323BD838800A7FC7F /* Resources */,
@@ -240,9 +286,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1AF2967F23BD838800A7FC7F /* Build configuration list for PBXNativeTarget "KElonTinderUITests" */;
 			buildPhases = (
+				A685C831851C36814AD43CAD /* [CP] Check Pods Manifest.lock */,
 				1AF2966C23BD838800A7FC7F /* Sources */,
 				1AF2966D23BD838800A7FC7F /* Frameworks */,
 				1AF2966E23BD838800A7FC7F /* Resources */,
+				913F383CF18BF8E79D0C4DAA /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -303,6 +351,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1AF2965F23BD838800A7FC7F /* LaunchScreen.storyboard in Resources */,
+				1A533B7C23C4702300A6DF35 /* GoogleService-Info.plist in Resources */,
 				1AF2965C23BD838800A7FC7F /* Assets.xcassets in Resources */,
 				1AF2965A23BD838600A7FC7F /* Main.storyboard in Resources */,
 			);
@@ -323,6 +372,109 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		54028A3C37FA88AFFDA3038B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-KElonTinderTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5E7E00DF336139BD2356843D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-KElonTinder/Pods-KElonTinder-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-KElonTinder/Pods-KElonTinder-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-KElonTinder/Pods-KElonTinder-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7F7918A3740A795823D6789E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-KElonTinder-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		913F383CF18BF8E79D0C4DAA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-KElonTinder-KElonTinderUITests/Pods-KElonTinder-KElonTinderUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-KElonTinder-KElonTinderUITests/Pods-KElonTinder-KElonTinderUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-KElonTinder-KElonTinderUITests/Pods-KElonTinder-KElonTinderUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A685C831851C36814AD43CAD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-KElonTinder-KElonTinderUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1AF2964B23BD838600A7FC7F /* Sources */ = {
@@ -446,6 +598,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -499,6 +652,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -510,6 +664,7 @@
 		};
 		1AF2967A23BD838800A7FC7F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 42BC636D2407D30F23C228FC /* Pods-KElonTinder.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -519,7 +674,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = k.elon.KElonTinder;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kelon.KElonTinder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -528,6 +683,7 @@
 		};
 		1AF2967B23BD838800A7FC7F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B2BF3373709A5A866FEB594D /* Pods-KElonTinder.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -537,7 +693,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = k.elon.KElonTinder;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kelon.KElonTinder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -546,6 +702,7 @@
 		};
 		1AF2967D23BD838800A7FC7F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 75AB6709AEE57F092483373F /* Pods-KElonTinderTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -568,6 +725,7 @@
 		};
 		1AF2967E23BD838800A7FC7F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1D2155D9EF03604AD547BAB0 /* Pods-KElonTinderTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -590,6 +748,7 @@
 		};
 		1AF2968023BD838800A7FC7F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CB4B5678F245E1C8619A7840 /* Pods-KElonTinder-KElonTinderUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -610,6 +769,7 @@
 		};
 		1AF2968123BD838800A7FC7F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 404034AF47B16804AAA6B1E9 /* Pods-KElonTinder-KElonTinderUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
