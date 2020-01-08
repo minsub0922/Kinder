@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class HomeController: UIViewController {
     private let topStackView = TopNavigationStackView()
@@ -19,31 +20,16 @@ class HomeController: UIViewController {
         return overallStackView
     } ()
     
-    let cardViewModels: [CardViewModel] = {
-        let producers: [ProducesCardViewModel] = [
-            User(name: "Jane",
-                 age: 18,
-                 profession: "Teacher",
-                 imageNames: ["jane1", "jane2", "jane3"]),
-            Advertiser(title: "Slide Out Menu",
-                       brandName: "Korean Elon",
-                       posterPhotoName: "slide_out_menu_poster"),
-            User(name: "Kelly",
-                          age: 23,
-                          profession: "Music DJ",
-                          imageNames: ["kelly1", "kelly2", "kelly3"])
-        ]
-        
-        let viewModels = producers.map({ $0.toCardViewModel() })
-        return viewModels
-    }()
+    var cardViewModels = [CardViewModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = .white
         topStackView.settingsButton.addTarget(self, action: #selector(handleSettings(_:)), for: .touchUpInside)
         setupLayout()
         setupDummyCards()
+        festchUsersFromFirestore()
     }
 
     @objc fileprivate func handleSettings(_: Any) {
@@ -52,6 +38,23 @@ class HomeController: UIViewController {
     }
     
     // MARK:- Fileprivate
+    fileprivate func festchUsersFromFirestore() {
+        Firestore.firestore().collection("usres").getDocuments { (snapshot, err) in
+            if let err = err {
+                print(err)
+                return
+            }
+            
+            snapshot?.documents.forEach({ documentSnapshot in
+                let userDictionary = documentSnapshot.data()
+                let user = User(dictionary: userDictionary)
+                self.cardViewModels.append(user.toCardViewModel())
+            })
+            
+            self.setupDummyCards()
+        }
+    }
+    
     fileprivate func setupDummyCards() {
         cardViewModels.forEach { cardViewModel in
             let cardView = CardView(frame: .zero)

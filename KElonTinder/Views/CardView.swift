@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class CardView: UIView {
     
@@ -14,7 +15,11 @@ class CardView: UIView {
         didSet {
             // accessimg index 0 will crash if imageNames.count == 0
             let imageName = cardViewModel.imageNames.first ?? ""
-            imageview.image = UIImage(named: imageName)
+            // load image using some kind of url instead
+            if let url = URL(string: imageName) {
+                imageview.sd_setImage(with: url)
+            }
+            
             informationLabel.attributedText = cardViewModel.attributedString
             informationLabel.textAlignment = cardViewModel.textAlignment
             
@@ -44,7 +49,7 @@ class CardView: UIView {
     
     // Encapsulation
     fileprivate let gradientLayer = CAGradientLayer()
-    fileprivate let imageview = UIImageView(image: #imageLiteral(resourceName: "lady5c"))
+    fileprivate let imageview = UIImageView(image: UIImage())
     fileprivate let informationLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
