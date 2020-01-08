@@ -40,8 +40,9 @@ class HomeController: UIViewController {
     }
 
     @objc fileprivate func handleSettings(_: Any) {
-        let registrationController = RegistrationController()
-        present(registrationController, animated: true)
+        let settingController = SettingsController()
+        let navigationController = UINavigationController(rootViewController: settingController)
+        present(navigationController, animated: true)
     }
     
     // MARK:- Fileprivate
