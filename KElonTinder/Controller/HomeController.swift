@@ -8,17 +8,19 @@
 
 import UIKit
 import Firebase
+import JGProgressHUD
 
 class HomeController: UIViewController {
     private let topStackView = TopNavigationStackView()
-    private let bottonsStackView = HomeBottomControlsStackView()
+    private let bottomControls = HomeBottomControlsStackView()
     private let cardDeckView = UIView()
+    
     private let overallStackView: UIStackView = {
         let overallStackView = UIStackView()
         overallStackView.axis = .vertical
         overallStackView.translatesAutoresizingMaskIntoConstraints = false
         return overallStackView
-    } ()
+    }()
     
     var cardViewModels = [CardViewModel]()
     
@@ -27,9 +29,14 @@ class HomeController: UIViewController {
         
         view.backgroundColor = .white
         topStackView.settingsButton.addTarget(self, action: #selector(handleSettings(_:)), for: .touchUpInside)
+        bottomControls.refreshButton.addTarget(self, action: #selector(handleRefresh), for: .touchUpInside)
         setupLayout()
         setupDummyCards()
-        festchUsersFromFirestore()
+        fetchUsersFromFirestore()
+    }
+    
+    @objc fileprivate func handleRefresh() {
+        fetchUsersFromFirestore()
     }
 
     @objc fileprivate func handleSettings(_: Any) {
@@ -38,8 +45,20 @@ class HomeController: UIViewController {
     }
     
     // MARK:- Fileprivate
-    fileprivate func festchUsersFromFirestore() {
-        Firestore.firestore().collection("usres").getDocuments { (snapshot, err) in
+    
+    var lastFetchedUser: User?
+    
+    fileprivate func fetchUsersFromFirestore() {
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text = "Fetching Users"
+        hud.show(in: view)
+        
+        let query = Firestore.firestore().collection("users")
+            .order(by: "uid").start(after: [lastFetchedUser?.uid ?? ""]).limit(to: 3)
+            //.whereField("age", isLessThan: 29)
+        query.getDocuments { (snapshot, err) in
+            hud.dismiss()
+            
             if let err = err {
                 print(err)
                 return
@@ -49,10 +68,17 @@ class HomeController: UIViewController {
                 let userDictionary = documentSnapshot.data()
                 let user = User(dictionary: userDictionary)
                 self.cardViewModels.append(user.toCardViewModel())
+                self.lastFetchedUser = user
+                self.setupCardFromUser(user: user)
             })
-            
-            self.setupDummyCards()
         }
+    }
+    
+    fileprivate func setupCardFromUser(user: User) {
+        let cardView = CardView(frame: .zero)
+        cardView.cardViewModel = user.toCardViewModel()
+        cardDeckView.addSubview(cardView)
+        cardView.fillSuperview()
     }
     
     fileprivate func setupDummyCards() {
@@ -60,6 +86,7 @@ class HomeController: UIViewController {
             let cardView = CardView(frame: .zero)
             cardView.cardViewModel = cardViewModel
             cardDeckView.addSubview(cardView)
+            cardDeckView.sendSubviewToBack(cardView)
             cardView.fillSuperview()
         }
     }
@@ -67,7 +94,7 @@ class HomeController: UIViewController {
     fileprivate func setupLayout() {
         view.addSubview(overallStackView)
         
-        [topStackView, cardDeckView, bottonsStackView].forEach { view in
+        [topStackView, cardDeckView, bottomControls].forEach { view in
             overallStackView.addArrangedSubview(view)
         }
         

@@ -38,8 +38,11 @@ class CardView: UIView {
     
     fileprivate func setupImageIndexObserver() {
         // prevent retain cycle
-        cardViewModel.imageIndexObserver = { [unowned self] (idx, image) in
-            self.imageview.image = image
+        cardViewModel.imageIndexObserver = { [unowned self] (idx, imageUrl) in
+            if let url = URL(string: imageUrl ?? "") {
+                self.imageview.sd_setImage(with: url)
+            }
+            
             self.barsStackView.arrangedSubviews.forEach { v in
                 v.backgroundColor = self.barDeSelectedColor
             }
@@ -63,6 +66,7 @@ class CardView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .white
         setupLayout()
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(gesture:)))
         addGestureRecognizer(panGesture)
