@@ -11,7 +11,8 @@ import Firebase
 import JGProgressHUD
 
 class RegistrationController: UIViewController {
-
+    var delegate: LoginControllerDelegate?
+    
     // UI Components
     let selectPhotoButton: UIButton = {
         let button = UIButton(type: .system)
@@ -27,25 +28,39 @@ class RegistrationController: UIViewController {
         return button
     }()
     let fullNameTextField: CustomTextField = {
-        let textField = CustomTextField(padding: 24)
+        let textField = CustomTextField(padding: 24, height: 50)
         textField.placeholder = "Enter full name"
         textField.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         return textField
     }()
     let emailTextField: CustomTextField = {
-        let textField = CustomTextField(padding: 24)
+        let textField = CustomTextField(padding: 24, height: 50)
         textField.placeholder = "Enter email"
         textField.keyboardType = .emailAddress
         textField.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         return textField
     }()
     let passwordTextField: CustomTextField = {
-        let textField = CustomTextField(padding: 24)
+        let textField = CustomTextField(padding: 24, height: 50)
         textField.placeholder = "Enter password"
         textField.isSecureTextEntry = true
         textField.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         return textField
     }()
+    let goToLoginButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Go to Login", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
+        button.addTarget(self, action: #selector(handleGoToLogin), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc fileprivate func handleGoToLogin() {
+        let loginController = LoginController()
+        //loginController.delegate = delegate
+        navigationController?.pushViewController(loginController, animated: true)
+    }
     
     @objc fileprivate func handleSelectPhoto() {
         let imagePickerController = UIImagePickerController()
@@ -92,6 +107,9 @@ class RegistrationController: UIViewController {
             
             print("Finished registering our user")
             
+            self.dismiss(animated: true) {
+                self.delegate?.didFinishLoggingIn()
+            }
         }
     }
     
@@ -217,6 +235,8 @@ class RegistrationController: UIViewController {
     }
     
     fileprivate func setupLayout() {
+        navigationController?.isNavigationBarHidden = true
+        
         view.addSubview(overallStackView)
         
         overallStackView.axis = .vertical
@@ -228,6 +248,12 @@ class RegistrationController: UIViewController {
                          trailing: view.trailingAnchor,
                          padding: .init(top: 0, left: 40, bottom: 0, right: 40))
         overallStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
+        view.addSubview(goToLoginButton)
+        goToLoginButton.anchor(top: nil,
+                               leading: view.leadingAnchor,
+                               bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                               trailing: view.trailingAnchor)
     }
     
     fileprivate func setupGradientLayer() {

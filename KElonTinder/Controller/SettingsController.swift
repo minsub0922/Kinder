@@ -60,37 +60,34 @@ class SettingsController: UITableViewController {
     var user: User?
     
     fileprivate func fetchCurrentUser() {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        Firestore.firestore().collection("users").document(uid).getDocument { (snapshot, err) in
+        Firestore.firestore().fetchCurrentUser { (user, err) in
             if let err = err {
-                print(err)
+                print("Failed to fetch user:", err)
                 return
             }
-            guard let dictionary = snapshot?.data() else { return }
-            self.user = User(dictionary: dictionary)
+            self.user = user
             self.loadUserPhotos()
-            
             self.tableView.reloadData()
         }
     }
     
     fileprivate func loadUserPhotos() {
         if  let imageUrl = self.user?.imageUrl1, let url = URL(string: imageUrl) {
-            SDWebImageManager.shared().loadImage(with: url,
+            SDWebImageManager.shared.loadImage(with: url,
                                                  options: .continueInBackground,
                                                  progress: nil) { (image, _, _, _, _, _) in
                                                     self.image1Button.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
             }
         }
         if  let imageUrl = self.user?.imageUrl2, let url = URL(string: imageUrl) {
-            SDWebImageManager.shared().loadImage(with: url,
+            SDWebImageManager.shared.loadImage(with: url,
                                                  options: .continueInBackground,
                                                  progress: nil) { (image, _, _, _, _, _) in
                                                     self.image2Button.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
             }
         }
         if  let imageUrl = self.user?.imageUrl3, let url = URL(string: imageUrl) {
-            SDWebImageManager.shared().loadImage(with: url,
+            SDWebImageManager.shared.loadImage(with: url,
                                                  options: .continueInBackground,
                                                  progress: nil) { (image, _, _, _, _, _) in
                                                     self.image3Button.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
@@ -293,6 +290,7 @@ class SettingsController: UITableViewController {
     }
     
     @objc fileprivate func handleLogout() {
+        try? Auth.auth().signOut()
         dismiss(animated: true)
     }
 }

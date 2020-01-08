@@ -20,6 +20,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         window?.rootViewController = RegistrationController()
         
+        FirebaseApp.configure()
+        let db = Firestore.firestore()
+        let settings = db.settings
+        settings.areTimestampsInSnapshotsEnabled = true
+        db.settings = settings
+        
+        window?.rootViewController = HomeController()
+        window?.makeKeyAndVisible()
+        
         return true
     }
 

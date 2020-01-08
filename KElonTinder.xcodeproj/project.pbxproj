@@ -22,6 +22,9 @@
 		1ADB991523C581E300CBE803 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ADB991423C581E300CBE803 /* SettingsController.swift */; };
 		1ADB991723C58A3E00CBE803 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ADB991623C58A3E00CBE803 /* SettingsCell.swift */; };
 		1ADB991923C59DDA00CBE803 /* AgeRangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ADB991823C59DDA00CBE803 /* AgeRangeCell.swift */; };
+		1ADB995A23C5BA0600CBE803 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ADB995923C5BA0600CBE803 /* LoginController.swift */; };
+		1ADB995C23C5BA0F00CBE803 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ADB995B23C5BA0F00CBE803 /* LoginViewModel.swift */; };
+		1ADB995E23C5C13C00CBE803 /* Firebase+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ADB995D23C5C13C00CBE803 /* Firebase+Utils.swift */; };
 		1AF2965323BD838600A7FC7F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2965223BD838600A7FC7F /* AppDelegate.swift */; };
 		1AF2965523BD838600A7FC7F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2965423BD838600A7FC7F /* SceneDelegate.swift */; };
 		1AF2965723BD838600A7FC7F /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2965623BD838600A7FC7F /* HomeController.swift */; };
@@ -68,6 +71,9 @@
 		1ADB991423C581E300CBE803 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		1ADB991623C58A3E00CBE803 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		1ADB991823C59DDA00CBE803 /* AgeRangeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeRangeCell.swift; sourceTree = "<group>"; };
+		1ADB995923C5BA0600CBE803 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		1ADB995B23C5BA0F00CBE803 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		1ADB995D23C5C13C00CBE803 /* Firebase+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Firebase+Utils.swift"; sourceTree = "<group>"; };
 		1AF2964F23BD838600A7FC7F /* KElonTinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KElonTinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AF2965223BD838600A7FC7F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1AF2965423BD838600A7FC7F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -125,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				1A87876523C32B9F006A99DD /* Extensions.swift */,
+				1ADB995D23C5C13C00CBE803 /* Firebase+Utils.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -154,6 +161,7 @@
 		1A87877123C41630006A99DD /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				1ADB995823C5B9F800CBE803 /* Login */,
 				1AF2965623BD838600A7FC7F /* HomeController.swift */,
 				1A58A9EC23C44FD2002D40E1 /* RegistrationController.swift */,
 				1ADB991423C581E300CBE803 /* SettingsController.swift */,
@@ -169,6 +177,15 @@
 				1A58A9F023C46403002D40E1 /* RegistrationViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		1ADB995823C5B9F800CBE803 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				1ADB995923C5BA0600CBE803 /* LoginController.swift */,
+				1ADB995B23C5BA0F00CBE803 /* LoginViewModel.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 		1AF2964623BD838600A7FC7F = {
@@ -264,7 +281,7 @@
 				1AF2964B23BD838600A7FC7F /* Sources */,
 				1AF2964C23BD838600A7FC7F /* Frameworks */,
 				1AF2964D23BD838600A7FC7F /* Resources */,
-				5E7E00DF336139BD2356843D /* [CP] Embed Pods Frameworks */,
+				E7118F55915A12E68F54BBCA /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -302,7 +319,7 @@
 				1AF2966C23BD838800A7FC7F /* Sources */,
 				1AF2966D23BD838800A7FC7F /* Frameworks */,
 				1AF2966E23BD838800A7FC7F /* Resources */,
-				913F383CF18BF8E79D0C4DAA /* [CP] Embed Pods Frameworks */,
+				31EB6B33DBB94F9B7EDE2641 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -386,6 +403,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		31EB6B33DBB94F9B7EDE2641 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-KElonTinder-KElonTinderUITests/Pods-KElonTinder-KElonTinderUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-KElonTinder-KElonTinderUITests/Pods-KElonTinder-KElonTinderUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-KElonTinder-KElonTinderUITests/Pods-KElonTinder-KElonTinderUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		54028A3C37FA88AFFDA3038B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -406,23 +440,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5E7E00DF336139BD2356843D /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-KElonTinder/Pods-KElonTinder-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-KElonTinder/Pods-KElonTinder-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-KElonTinder/Pods-KElonTinder-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7F7918A3740A795823D6789E /* [CP] Check Pods Manifest.lock */ = {
@@ -447,23 +464,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		913F383CF18BF8E79D0C4DAA /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-KElonTinder-KElonTinderUITests/Pods-KElonTinder-KElonTinderUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-KElonTinder-KElonTinderUITests/Pods-KElonTinder-KElonTinderUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-KElonTinder-KElonTinderUITests/Pods-KElonTinder-KElonTinderUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		A685C831851C36814AD43CAD /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -486,6 +486,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		E7118F55915A12E68F54BBCA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-KElonTinder/Pods-KElonTinder-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-KElonTinder/Pods-KElonTinder-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-KElonTinder/Pods-KElonTinder-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -493,6 +510,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1ADB995E23C5C13C00CBE803 /* Firebase+Utils.swift in Sources */,
 				1A58A9EB23C42397002D40E1 /* Advertiser.swift in Sources */,
 				1A87876D23C370D5006A99DD /* CardView.swift in Sources */,
 				1AF2965723BD838600A7FC7F /* HomeController.swift in Sources */,
@@ -506,9 +524,11 @@
 				1A533B7E23C496D200A6DF35 /* Bindable.swift in Sources */,
 				1A58A9EF23C454D2002D40E1 /* CustomTextField.swift in Sources */,
 				1A58A9F123C46403002D40E1 /* RegistrationViewModel.swift in Sources */,
+				1ADB995A23C5BA0600CBE803 /* LoginController.swift in Sources */,
 				1AF2965523BD838600A7FC7F /* SceneDelegate.swift in Sources */,
 				1A87876623C32B9F006A99DD /* Extensions.swift in Sources */,
 				1ADB991723C58A3E00CBE803 /* SettingsCell.swift in Sources */,
+				1ADB995C23C5BA0F00CBE803 /* LoginViewModel.swift in Sources */,
 				1A87877423C416B8006A99DD /* CardViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
