@@ -140,9 +140,13 @@ class SettingsController: UITableViewController {
             headerLabel.text = "Profession"
         case 3:
             headerLabel.text = "Age"
-        default:
+        case 4:
             headerLabel.text = "Bio"
+        default:
+            headerLabel.text = "Seeking Age Range"
         }
+        
+        headerLabel.font = UIFont.boldSystemFont(ofSize: 16)
         return headerLabel
     }
     
@@ -154,7 +158,7 @@ class SettingsController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 5
+        return 6
     }
    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -162,6 +166,19 @@ class SettingsController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        // age range cell
+        if indexPath.section == 5 {
+            let ageRangeCell = AgeRangeCell(style: .default, reuseIdentifier: nil)
+            ageRangeCell.minSlider.addTarget(self, action: #selector(handleMinAgeChange), for: .valueChanged)
+            ageRangeCell.maxSlider.addTarget(self, action: #selector(handleMaxAgeChange), for: .valueChanged)
+            ageRangeCell.minSlider.value = Float(user?.minSeekingAge ?? 0)
+            ageRangeCell.maxSlider.value = Float(user?.maxSeekingAge ?? 0)
+            ageRangeCell.minLabel.text = "Min \(user?.minSeekingAge ?? 0)"
+            ageRangeCell.maxLabel.text = "Max \(user?.maxSeekingAge ?? 0)"
+            return ageRangeCell
+        }
+        
         let cell = SettingsCell(style: .default, reuseIdentifier: nil)
         
         switch indexPath.section {
@@ -182,10 +199,26 @@ class SettingsController: UITableViewController {
         default:
             cell.textField.placeholder = "Enter Bio"
         }
-        
+         
         return cell
     }
     
+    // MARK:- Actions
+    @objc fileprivate func handleMinAgeChange(slider: UISlider) {
+        // want to update the minLabel in AgeRaneCell somehow...
+        let ageRangeCell = tableView.cellForRow(at: IndexPath(row: 0, section: 5)) as! AgeRangeCell
+        ageRangeCell.minLabel.text = "Min \(Int(slider.value))"
+        
+        self.user?.minSeekingAge = Int(slider.value)
+    }
+    
+    @objc fileprivate func handleMaxAgeChange(slider: UISlider) {
+        // want to update the maxLabel in AgeRaneCell somehow...
+        let ageRangeCell = tableView.cellForRow(at: IndexPath(row: 0, section: 5)) as! AgeRangeCell
+        ageRangeCell.maxLabel.text = "Max \(Int(slider.value))"
+        
+        self.user?.maxSeekingAge = Int(slider.value)
+    }
     @objc fileprivate func handleNameChange(textField: UITextField) {
         self.user?.name = textField.text
     }
@@ -232,6 +265,8 @@ class SettingsController: UITableViewController {
             "imageUrl3": user?.imageUrl3 ?? "",
             "age": user?.age ?? -1,
             "profession": user?.profession ?? "",
+            "minSeekingAge": user?.minSeekingAge ?? -1,
+            "maxSeekingAge": user?.maxSeekingAge ?? -1,
         ]
         
         Firestore.firestore().collection("users").document(uid).setData(documentData) { (err) in

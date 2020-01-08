@@ -27,7 +27,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         if let windowScene = (scene as? UIWindowScene) {
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = HomeController()
+            
+            if let currentUser = Auth.auth().currentUser {
+                window.rootViewController = HomeController()
+            } else {
+                window.rootViewController = RegistrationController()
+            }
+            
             self.window = window
             window.makeKeyAndVisible()
         }
