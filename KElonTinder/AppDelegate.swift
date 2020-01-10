@@ -16,17 +16,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        window = UIWindow()
-        window?.makeKeyAndVisible()
-        window?.rootViewController = RegistrationController()
-        
         FirebaseApp.configure()
         let db = Firestore.firestore()
         let settings = db.settings
         settings.areTimestampsInSnapshotsEnabled = true
         db.settings = settings
         
-        window?.rootViewController = HomeController()
+        window = UIWindow()
+        window?.rootViewController = SwipingPhotosController(transitionStyle: .scroll, navigationOrientation: .horizontal)
         window?.makeKeyAndVisible()
         
         return true

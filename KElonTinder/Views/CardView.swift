@@ -92,6 +92,7 @@ class CardView: UIView {
     
     fileprivate let moreInfoButton: UIButton = {
         let button = UIButton(type: .system)
+        button.imageView?.tintColor = .white
         button.setImage(#imageLiteral(resourceName: "info_icon"), for: .normal)
         button.addTarget(self, action: #selector(handleMoreInfo), for: .touchUpInside)
         return button
@@ -99,11 +100,6 @@ class CardView: UIView {
     
     @objc fileprivate func handleMoreInfo() {
         delegate?.didTapMoreInfo(cardViewModel: cardViewModel)
-//        let rootViewController = UIApplication.shared.keyWindow?.rootViewController
-//        let userDetailsController = UIViewController()
-//        userDetailsController.view.backgroundColor = .yellow
-//
-//        rootViewController?.present(userDetailsController, animated: true)
     }
     
     fileprivate func setupLayout() {

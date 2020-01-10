@@ -34,6 +34,7 @@
 		1AF2966A23BD838800A7FC7F /* KElonTinderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2966923BD838800A7FC7F /* KElonTinderTests.swift */; };
 		1AF2967523BD838800A7FC7F /* KElonTinderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2967423BD838800A7FC7F /* KElonTinderUITests.swift */; };
 		1AFB3D4D23C84A26009DF25F /* UserDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFB3D4C23C84A26009DF25F /* UserDetailsController.swift */; };
+		1AFB3D4F23C858FB009DF25F /* SwipingPhotosController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFB3D4E23C858FB009DF25F /* SwipingPhotosController.swift */; };
 		32B44DAFCDB8F99F1829987D /* Pods_KElonTinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A5B39814B6210EE35823409 /* Pods_KElonTinder.framework */; };
 		D03E18D8C6A764EEAA9D7C24 /* Pods_KElonTinder_KElonTinderUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE7312CF20506088344FDEBB /* Pods_KElonTinder_KElonTinderUITests.framework */; };
 		FBC7C2FE0982A4FACC80BDD4 /* Pods_KElonTinderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FE5F75108393A8D217E9054 /* Pods_KElonTinderTests.framework */; };
@@ -90,6 +91,7 @@
 		1AF2967423BD838800A7FC7F /* KElonTinderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KElonTinderUITests.swift; sourceTree = "<group>"; };
 		1AF2967623BD838800A7FC7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1AFB3D4C23C84A26009DF25F /* UserDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsController.swift; sourceTree = "<group>"; };
+		1AFB3D4E23C858FB009DF25F /* SwipingPhotosController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingPhotosController.swift; sourceTree = "<group>"; };
 		1D2155D9EF03604AD547BAB0 /* Pods-KElonTinderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KElonTinderTests.release.xcconfig"; path = "Target Support Files/Pods-KElonTinderTests/Pods-KElonTinderTests.release.xcconfig"; sourceTree = "<group>"; };
 		3FE5F75108393A8D217E9054 /* Pods_KElonTinderTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KElonTinderTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		404034AF47B16804AAA6B1E9 /* Pods-KElonTinder-KElonTinderUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KElonTinder-KElonTinderUITests.release.xcconfig"; path = "Target Support Files/Pods-KElonTinder-KElonTinderUITests/Pods-KElonTinder-KElonTinderUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -254,6 +256,7 @@
 			isa = PBXGroup;
 			children = (
 				1AFB3D4C23C84A26009DF25F /* UserDetailsController.swift */,
+				1AFB3D4E23C858FB009DF25F /* SwipingPhotosController.swift */,
 			);
 			path = "User Details";
 			sourceTree = "<group>";
@@ -541,6 +544,7 @@
 				1A87876623C32B9F006A99DD /* Extensions.swift in Sources */,
 				1ADB991723C58A3E00CBE803 /* SettingsCell.swift in Sources */,
 				1ADB995C23C5BA0F00CBE803 /* LoginViewModel.swift in Sources */,
+				1AFB3D4F23C858FB009DF25F /* SwipingPhotosController.swift in Sources */,
 				1A87877423C416B8006A99DD /* CardViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
