@@ -107,8 +107,6 @@ class HomeController: UIViewController {
                 if user.uid == Auth.auth().currentUser?.uid {
                     self.setupCardFromUser(user: user)
                 }
-//                self.cardViewModels.append(user.toCardViewModel())
-//                self.lastFetchedUser = user
             })
         }
     }
