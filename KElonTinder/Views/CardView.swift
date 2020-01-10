@@ -9,7 +9,12 @@
 import UIKit
 import SDWebImage
 
+protocol CardViewDelegate {
+    func didTapMoreInfo()
+}
+
 class CardView: UIView {
+    var delegate: CardViewDelegate?
     
     var cardViewModel: CardViewModel! {
         didSet {
@@ -85,6 +90,22 @@ class CardView: UIView {
         }
     }
     
+    fileprivate let moreInfoButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "info_icon"), for: .normal)
+        button.addTarget(self, action: #selector(handleMoreInfo), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc fileprivate func handleMoreInfo() {
+        delegate?.didTapMoreInfo()
+//        let rootViewController = UIApplication.shared.keyWindow?.rootViewController
+//        let userDetailsController = UIViewController()
+//        userDetailsController.view.backgroundColor = .yellow
+//
+//        rootViewController?.present(userDetailsController, animated: true)
+    }
+    
     fileprivate func setupLayout() {
         // custom drawing code
         layer.cornerRadius = 10
@@ -97,10 +118,18 @@ class CardView: UIView {
         setupBarsStackView()
 
         // add a gradient later somehow
-        setupFradientLayer()
+        setupGradientLayer()
         
         addSubview(informationLabel)
         informationLabel.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 16, bottom: 16, right: 16))
+        
+        addSubview(moreInfoButton)
+        moreInfoButton.anchor(top: nil,
+                              leading: nil,
+                              bottom: bottomAnchor,
+                              trailing: trailingAnchor,
+                              padding: .init(top: 0, left: 0, bottom: 16, right: 16),
+                              size: .init(width: 44, height: 44))
     }
     
     fileprivate let barsStackView: UIStackView = {
@@ -122,7 +151,7 @@ class CardView: UIView {
         
     }
     
-    fileprivate func setupFradientLayer() {
+    fileprivate func setupGradientLayer() {
         // draw a gradient
         gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
         gradientLayer.locations = [0.5, 1.1]

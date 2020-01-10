@@ -81,16 +81,18 @@ class HomeController: UIViewController {
     var lastFetchedUser: User?
     
     fileprivate func fetchUsersFromFirestore() {
-        guard
-            let minAge = user?.minSeekingAge,
-            let maxAge = user?.maxSeekingAge
-            else { return }
-        
         let query = Firestore.firestore().collection("users")
+        
+        if
+            let minAge = user?.minSeekingAge,
+            let maxAge = user?.maxSeekingAge {
+            query
             .whereField("age", isGreaterThanOrEqualTo: minAge)
             .whereField("age", isLessThanOrEqualTo: maxAge)
             //.order(by: "uid").start(after: [lastFetchedUser?.uid ?? ""]).limit(to: 3)
             //.whereField("age", isLessThan: 29)
+        }
+            
         query.getDocuments { (snapshot, err) in
             self.hud.dismiss()
             
@@ -102,15 +104,18 @@ class HomeController: UIViewController {
             snapshot?.documents.forEach({ documentSnapshot in
                 let userDictionary = documentSnapshot.data()
                 let user = User(dictionary: userDictionary)
-                self.cardViewModels.append(user.toCardViewModel())
-                self.lastFetchedUser = user
-                self.setupCardFromUser(user: user)
+                if user.uid == Auth.auth().currentUser?.uid {
+                    self.setupCardFromUser(user: user)
+                }
+//                self.cardViewModels.append(user.toCardViewModel())
+//                self.lastFetchedUser = user
             })
         }
     }
     
     fileprivate func setupCardFromUser(user: User) {
         let cardView = CardView(frame: .zero)
+        cardView.delegate = self
         cardView.cardViewModel = user.toCardViewModel()
         cardDeckView.addSubview(cardView)
         cardView.fillSuperview()
@@ -153,5 +158,12 @@ extension HomeController: SettingsControllerDelegate {
 extension HomeController: LoginControllerDelegate {
     func didFinishLoggingIn() {
         fetchCurrentUser()
+    }
+}
+
+extension HomeController: CardViewDelegate {
+    func didTapMoreInfo() {
+        let userDetailsController = UserDetailsController()
+        present(userDetailsController, animated: true)
     }
 }
