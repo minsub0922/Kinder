@@ -7,23 +7,37 @@
 //
 
 import UIKit
+import SDWebImage
 
 class SwipingPhotosController: UIPageViewController, UIPageViewControllerDataSource {
     
-    let controllers = [
-        PhotoController(image: #imageLiteral(resourceName: "dismiss_circle")),
-        PhotoController(image: #imageLiteral(resourceName: "super_like_circle")),
-        PhotoController(image: #imageLiteral(resourceName: "like_circle")),
-        PhotoController(image: #imageLiteral(resourceName: "info_icon")),
-        PhotoController(image: #imageLiteral(resourceName: "boost_circle"))
-    ]
+    var cardViewModel: CardViewModel! {
+        didSet {
+            cardViewModel.imageUrls
+            controllers = cardViewModel.imageUrls.map({ url -> UIViewController in
+                return PhotoController(imageUrl: url)
+            })
+            
+            setViewControllers([controllers.first!], direction: .forward, animated: false)
+        }
+    }
+    
+    var controllers = [UIViewController]()
+    
+//    let controllers = [
+//        PhotoController(image: #imageLiteral(resourceName: "dismiss_circle")),
+//        PhotoController(image: #imageLiteral(resourceName: "super_like_circle")),
+//        PhotoController(image: #imageLiteral(resourceName: "like_circle")),
+//        PhotoController(image: #imageLiteral(resourceName: "info_icon")),
+//        PhotoController(image: #imageLiteral(resourceName: "boost_circle"))
+//    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = .white
         dataSource = self
         
-        setViewControllers([controllers.first!], direction: .forward, animated: false)
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
@@ -43,8 +57,10 @@ class PhotoController: UIViewController {
 
     let imageView = UIImageView(image: #imageLiteral(resourceName: "jane3"))
 
-    init(image: UIImage) {
-        imageView.image = image
+    init(imageUrl: String) {
+        if let url = URL(string: imageUrl) {
+            imageView.sd_setImage(with: url)
+        }
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -52,7 +68,7 @@ class PhotoController: UIViewController {
         super.viewDidLoad()
         
         view.addSubview(imageView)
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.fillSuperview()
     }
     

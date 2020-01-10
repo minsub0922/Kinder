@@ -16,10 +16,12 @@ class UserDetailsController: UIViewController {
     var cardViewModel: CardViewModel! {
         didSet {
             infoLabel.attributedText = cardViewModel.attributedString
-            guard
-                let firstImageUrl = cardViewModel.imageUrls.first,
-                let url = URL(string: firstImageUrl) else {return}
-            imageView.sd_setImage(with: url)
+            
+            swipingPhotosController.cardViewModel = cardViewModel
+//
+//            guard
+//                let firstImageUrl = cardViewModel.imageUrls.first,
+//                let url = URL(string: firstImageUrl) else {return}
         }
     }
     
@@ -39,12 +41,9 @@ class UserDetailsController: UIViewController {
         return sv
     }()
     
-    let imageView: UIImageView = {
-        let iv = UIImageView(image: #imageLiteral(resourceName: "kelly1"))
-        iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
-        return iv
-    }()
+    // TODO : swap out a UIImageView with a UIVIewController component
+    let swipingPhotosController = SwipingPhotosController(transitionStyle: .scroll,
+                                                          navigationOrientation: .horizontal)
     
     let infoLabel: UILabel = {
         let lb = UILabel()
@@ -85,26 +84,34 @@ class UserDetailsController: UIViewController {
         setupBottomControls()
     }
     
+    fileprivate let extraSwipingHeight: CGFloat = 80
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        let swipingView = swipingPhotosController.view!
+        
+        // why frame instead of auto layout
+        swipingView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.width + extraSwipingHeight)
+    }
+    
     fileprivate func setupLayout() {
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapDismiss)))
         
+        let swipingView = swipingPhotosController.view!
+        scrollView.addSubview(swipingView)
+        
         view.addSubview(scrollView)
         scrollView.fillSuperview()
-        
-        scrollView.addSubview(imageView)
-        
-        // why frame instead of auto layout
-        imageView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.width)
-        
         scrollView.addSubview(infoLabel)
-        infoLabel.anchor(top: imageView.bottomAnchor,
+        infoLabel.anchor(top: swipingView.bottomAnchor,
                          leading: scrollView.leadingAnchor,
                          bottom: nil,
                          trailing: scrollView.trailingAnchor,
                          padding: .init(top: 16, left: 16, bottom: 0, right: 0))
         
         scrollView.addSubview(dismissButton)
-        dismissButton.anchor(top: imageView.bottomAnchor,
+        dismissButton.anchor(top: swipingView.bottomAnchor,
                              leading: nil,
                              bottom: nil,
                              trailing: view.trailingAnchor,
@@ -148,9 +155,9 @@ extension UserDetailsController: UIScrollViewDelegate {
                     view.frame.width + changeY * 2)
         let x = min(0, -changeY)
         let y = min(0, -changeY)
-        imageView.frame = CGRect(x: x,
-                                 y: y,
-                                 width: width,
-                                 height: width)
+//        imageView.frame = CGRect(x: x,
+//                                 y: y,
+//                                 width: width,
+//                                 height: width)
     }
 }

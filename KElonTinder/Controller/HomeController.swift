@@ -104,7 +104,7 @@ class HomeController: UIViewController {
             snapshot?.documents.forEach({ documentSnapshot in
                 let userDictionary = documentSnapshot.data()
                 let user = User(dictionary: userDictionary)
-                if user.uid == Auth.auth().currentUser?.uid {
+                if user.uid != Auth.auth().currentUser?.uid {
                     self.setupCardFromUser(user: user)
                 }
             })

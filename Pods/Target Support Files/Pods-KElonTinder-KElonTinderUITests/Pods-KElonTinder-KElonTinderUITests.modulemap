@@ -1,0 +1,6 @@
+framework module Pods_KElonTinder_KElonTinderUITests {
+  umbrella header "Pods-KElonTinder-KElonTinderUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
