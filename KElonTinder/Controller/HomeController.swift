@@ -119,16 +119,6 @@ class HomeController: UIViewController {
         cardView.fillSuperview()
     }
     
-    fileprivate func setupDummyCards() {
-        cardViewModels.forEach { cardViewModel in
-            let cardView = CardView(frame: .zero)
-            cardView.cardViewModel = cardViewModel
-            cardDeckView.addSubview(cardView)
-            cardDeckView.sendSubviewToBack(cardView)
-            cardView.fillSuperview()
-        }
-    }
-    
     fileprivate func setupLayout() {
         view.addSubview(overallStackView)
         

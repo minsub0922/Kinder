@@ -149,6 +149,6 @@ extension UserDetailsController: UIScrollViewDelegate {
         imageView.frame = CGRect(x: x,
                                  y: y,
                                  width: width,
-                                 height: width)
+                                 height: width + extraSwipingHeight)
     }
 }
