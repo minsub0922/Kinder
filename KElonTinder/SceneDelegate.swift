@@ -19,26 +19,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        FirebaseApp.configure()
-        let db = Firestore.firestore()
-        let settings = db.settings
-        settings.areTimestampsInSnapshotsEnabled = true
-        db.settings = settings
-        
-        if let windowScene = (scene as? UIWindowScene) {
-            let window = UIWindow(windowScene: windowScene)
-            
-//            if let currentUser = Auth.auth().currentUser {
-//                
-//            } else {
-//                window.rootViewController = RegistrationController()
-//            }
-//            
-            window.rootViewController = HomeController()
-            
-            self.window = window
-            window.makeKeyAndVisible()
-        }
+//        FirebaseApp.configure()
+//        let db = Firestore.firestore()
+//        let settings = db.settings
+//        settings.areTimestampsInSnapshotsEnabled = true
+//        db.settings = settings
+//
+//        if let windowScene = (scene as? UIWindowScene) {
+//            let window = UIWindow(windowScene: windowScene)
+//
+////            if let currentUser = Auth.auth().currentUser {
+////
+////            } else {
+////                window.rootViewController = RegistrationController()
+////            }
+////
+//            window.rootViewController = HomeController()
+//
+//            self.window = window
+//            window.makeKeyAndVisible()
+//        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

@@ -163,6 +163,7 @@ extension HomeController: CardViewDelegate {
     func didTapMoreInfo(cardViewModel: CardViewModel) {
         let userDetailsController = UserDetailsController()
         userDetailsController.cardViewModel = cardViewModel
+        userDetailsController.modalPresentationStyle = .fullScreen
         present(userDetailsController, animated: true)
     }
 }
