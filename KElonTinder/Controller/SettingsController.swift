@@ -270,7 +270,7 @@ class SettingsController: UITableViewController {
             "minSeekingAge": user?.minSeekingAge ?? -1,
             "maxSeekingAge": user?.maxSeekingAge ?? -1,
         ]
-        
+                
         Firestore.firestore().collection("users").document(uid).setData(documentData) { (err) in
             hud.dismiss()
             self.view.endEditing(true)

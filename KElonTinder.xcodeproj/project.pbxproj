@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1A533B7C23C4702300A6DF35 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A533B7B23C4702300A6DF35 /* GoogleService-Info.plist */; };
 		1A533B7E23C496D200A6DF35 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A533B7D23C496D200A6DF35 /* Bindable.swift */; };
 		1A58A9EB23C42397002D40E1 /* Advertiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58A9EA23C42397002D40E1 /* Advertiser.swift */; };
 		1A58A9ED23C44FD2002D40E1 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58A9EC23C44FD2002D40E1 /* RegistrationController.swift */; };
@@ -25,6 +24,7 @@
 		1ADB995A23C5BA0600CBE803 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ADB995923C5BA0600CBE803 /* LoginController.swift */; };
 		1ADB995C23C5BA0F00CBE803 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ADB995B23C5BA0F00CBE803 /* LoginViewModel.swift */; };
 		1ADB995E23C5C13C00CBE803 /* Firebase+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ADB995D23C5C13C00CBE803 /* Firebase+Utils.swift */; };
+		1ADF0C3823D45210009020EE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1ADF0C3723D45210009020EE /* GoogleService-Info.plist */; };
 		1AF2965323BD838600A7FC7F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2965223BD838600A7FC7F /* AppDelegate.swift */; };
 		1AF2965523BD838600A7FC7F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2965423BD838600A7FC7F /* SceneDelegate.swift */; };
 		1AF2965723BD838600A7FC7F /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2965623BD838600A7FC7F /* HomeController.swift */; };
@@ -58,7 +58,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1A533B7B23C4702300A6DF35 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1A533B7D23C496D200A6DF35 /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 		1A58A9EA23C42397002D40E1 /* Advertiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertiser.swift; sourceTree = "<group>"; };
 		1A58A9EC23C44FD2002D40E1 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
@@ -76,6 +75,7 @@
 		1ADB995923C5BA0600CBE803 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		1ADB995B23C5BA0F00CBE803 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		1ADB995D23C5C13C00CBE803 /* Firebase+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Firebase+Utils.swift"; sourceTree = "<group>"; };
+		1ADF0C3723D45210009020EE /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "KElonTinder/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		1AF2964F23BD838600A7FC7F /* KElonTinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KElonTinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AF2965223BD838600A7FC7F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1AF2965423BD838600A7FC7F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -229,7 +229,7 @@
 				1AF2965B23BD838800A7FC7F /* Assets.xcassets */,
 				1AF2965D23BD838800A7FC7F /* LaunchScreen.storyboard */,
 				1AF2966023BD838800A7FC7F /* Info.plist */,
-				1A533B7B23C4702300A6DF35 /* GoogleService-Info.plist */,
+				1ADF0C3723D45210009020EE /* GoogleService-Info.plist */,
 			);
 			path = KElonTinder;
 			sourceTree = "<group>";
@@ -394,7 +394,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1AF2965F23BD838800A7FC7F /* LaunchScreen.storyboard in Resources */,
-				1A533B7C23C4702300A6DF35 /* GoogleService-Info.plist in Resources */,
+				1ADF0C3823D45210009020EE /* GoogleService-Info.plist in Resources */,
 				1AF2965C23BD838800A7FC7F /* Assets.xcassets in Resources */,
 				1AF2965A23BD838600A7FC7F /* Main.storyboard in Resources */,
 			);

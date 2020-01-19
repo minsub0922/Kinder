@@ -220,8 +220,6 @@ class RegistrationController: UIViewController {
         return stackView
     }()
     
-        
-
     lazy var overallStackView = UIStackView(arrangedSubviews: [
         selectPhotoButton,
         verticalStackView
@@ -270,6 +268,7 @@ extension RegistrationController: UIImagePickerControllerDelegate, UINavigationC
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let image = info[.originalImage] as? UIImage
         registrationViewModel.bindableImage.value = image
+        registrationViewModel.checkFormValidty()
         dismiss(animated: true)
     }
     

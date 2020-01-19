@@ -22,7 +22,9 @@ class CardView: UIView {
             let imageName = cardViewModel.imageUrls.first ?? ""
             // load image using some kind of url instead
             if let url = URL(string: imageName) {
-                imageview.sd_setImage(with: url)
+                imageview.sd_setImage(with: url,
+                                      placeholderImage: #imageLiteral(resourceName: "photo_placeholder"),
+                                      options: .continueInBackground)
             }
             
             informationLabel.attributedText = cardViewModel.attributedString
@@ -45,7 +47,9 @@ class CardView: UIView {
         // prevent retain cycle
         cardViewModel.imageIndexObserver = { [unowned self] (idx, imageUrl) in
             if let url = URL(string: imageUrl ?? "") {
-                self.imageview.sd_setImage(with: url)
+                self.imageview.sd_setImage(with: url,
+                                           placeholderImage: #imageLiteral(resourceName: "photo_placeholder"),
+                                           options: .continueInBackground)
             }
             
             self.barsStackView.arrangedSubviews.forEach { v in
