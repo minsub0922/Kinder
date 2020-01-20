@@ -22,7 +22,7 @@ class CustomImagePickerController: UIImagePickerController {
 class SettingsController: UITableViewController {
     
     var delegate: SettingsControllerDelegate?
-    
+     
     // instance properties
     lazy var image1Button = createButton(selector: #selector(handleSelectPhoto))
     lazy var image2Button = createButton(selector: #selector(handleSelectPhoto))

@@ -36,8 +36,7 @@ class UserDetailsController: UIViewController {
     }()
     
     // TODO : swap out a UIImageView with a UIVIewController component
-    let swipingPhotosController = SwipingPhotosController(transitionStyle: .scroll,
-                                                          navigationOrientation: .horizontal)
+    let swipingPhotosController = SwipingPhotosController()
     
     let infoLabel: UILabel = {
         let lb = UILabel()
