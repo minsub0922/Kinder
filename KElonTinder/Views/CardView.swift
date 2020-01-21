@@ -11,16 +11,18 @@ import SDWebImage
 
 protocol CardViewDelegate {
     func didTapMoreInfo(cardViewModel: CardViewModel)
+    func didRemoveCard(cardView: CardView)
 }
 
 class CardView: UIView {
+    
+    // Use LinkedList
+    var nextCardView: CardView?
+    
     var delegate: CardViewDelegate?
     
     var cardViewModel: CardViewModel! {
         didSet {
-            
-            
-            
             swipingPhotosController.cardViewModel = self.cardViewModel
             
             informationLabel.attributedText = cardViewModel.attributedString
@@ -201,7 +203,7 @@ class CardView: UIView {
                        options: .curveEaseOut,
                        animations: {
                         if shouldDismissCard {
-                            self.center = CGPoint(x: 1000 * translationDirection, y: 0)
+                            self.dismiss(translationDirection: translationDirection)
                         } else {
                             self.transform = .identity
                         }
@@ -209,11 +211,23 @@ class CardView: UIView {
             self.transform = .identity
             if shouldDismissCard {
                 self.removeFromSuperview()
+                
+                // reset topCardView inside of HOme Controller
+                self.delegate?.didRemoveCard(cardView: self)
             }
         }
     }
     
     required init?(coder: NSCoder) {
         fatalError()
+    }
+}
+
+
+// MARK:- Animations
+extension CardView {
+    func dismiss(translationDirection: CGFloat = 1) {
+        self.center = CGPoint(x: 600 * translationDirection + self.frame.width / 2,
+                              y: self.frame.height / 2)
     }
 }

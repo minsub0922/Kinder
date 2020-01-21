@@ -30,6 +30,7 @@ class HomeController: UIViewController {
         view.backgroundColor = .white
         topStackView.settingsButton.addTarget(self, action: #selector(handleSettings(_:)), for: .touchUpInside)
         bottomControls.refreshButton.addTarget(self, action: #selector(handleRefresh), for: .touchUpInside)
+        bottomControls.likeButton.addTarget(self, action: #selector(handleLike), for: .touchUpInside)
         
         setupLayout()
         fetchCurrentUser()
@@ -55,6 +56,24 @@ class HomeController: UIViewController {
         settingController.delegate = self
         let navigationController = UINavigationController(rootViewController: settingController)
         present(navigationController, animated: true)
+    }
+    
+    var topCardView: CardView?
+    
+    @objc fileprivate func handleLike() {
+        UIView.animate(withDuration: 1,
+                       delay: 0,
+                       usingSpringWithDamping: 0.6,
+                       initialSpringVelocity: 0.1,
+                       options: .curveEaseOut,
+                       animations: {
+                        self.topCardView?.dismiss()
+                        let angle = 15 * CGFloat.pi / 180
+                        self.topCardView?.transform = CGAffineTransform(rotationAngle: angle) },
+                       completion: { _ in
+                        self.topCardView?.removeFromSuperview()
+                        self.topCardView = self.topCardView?.nextCardView }
+        )
     }
     
     // MARK:- Fileprivate
@@ -101,22 +120,33 @@ class HomeController: UIViewController {
                 return
             }
             
+            // setup the nextCardView relationship for all cards
+            
+            var previousCardView: CardView?
+            
+            // Get User From FB
             snapshot?.documents.forEach({ documentSnapshot in
                 let userDictionary = documentSnapshot.data()
                 let user = User(dictionary: userDictionary)
                 if user.uid != Auth.auth().currentUser?.uid {
-                    self.setupCardFromUser(user: user)
+                    let cardView = self.setupCardFromUser(user: user)
+                    // use LinkedList Data Structure
+                    previousCardView?.nextCardView = cardView
+                    previousCardView = cardView
+                    if self.topCardView == nil { self.topCardView = cardView }
                 }
             })
         }
     }
     
-    fileprivate func setupCardFromUser(user: User) {
+    fileprivate func setupCardFromUser(user: User) -> CardView {
         let cardView = CardView(frame: .zero)
         cardView.delegate = self
         cardView.cardViewModel = user.toCardViewModel()
         cardDeckView.addSubview(cardView)
+        cardDeckView.sendSubviewToBack(cardView)
         cardView.fillSuperview()
+        return cardView
     }
     
     fileprivate func setupLayout() {
@@ -150,6 +180,11 @@ extension HomeController: LoginControllerDelegate {
 }
 
 extension HomeController: CardViewDelegate {
+    func didRemoveCard(cardView: CardView) {
+        self.topCardView?.removeFromSuperview()
+        self.topCardView = self.topCardView?.nextCardView
+    }
+    
     func didTapMoreInfo(cardViewModel: CardViewModel) {
         let userDetailsController = UserDetailsController()
         userDetailsController.cardViewModel = cardViewModel
