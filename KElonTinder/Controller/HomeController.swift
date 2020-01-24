@@ -60,8 +60,56 @@ class HomeController: UIViewController {
     
     var topCardView: CardView?
     
-    @objc fileprivate func handleDislike() {
+    @objc func handleDislike() {
+        saveSwipeFirestore(didLike: 0)
         performSwipeAnimation(translation: -700, angle: -15)
+    }
+    
+    @objc func handleLike() {
+        saveSwipeFirestore(didLike: 1)
+        performSwipeAnimation(translation: 700, angle: 15)
+    }
+    
+    fileprivate func saveSwipeFirestore(didLike: Int) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let cardUID = topCardView?.cardViewModel.uid else { return }
+        let documentData: [String: Any] = [cardUID: didLike]
+        
+        Firestore.firestore()
+            .collection("swipes")
+            .document(uid)
+            .getDocument { (snapshot, err) in
+                if let err = err {
+                    print("Fail to save swipe data: ", err)
+                    return
+                }
+                
+                if snapshot?.exists == true {
+                    Firestore.firestore()
+                        .collection("swipes")
+                        .document(uid)
+                        .updateData(documentData) { err in
+                            if let err = err {
+                                print("Fail to save swipe data: ", err)
+                                return
+                            }
+                            
+                            print("successfully saved swiped..")
+                    }
+                } else {
+                    Firestore.firestore()
+                        .collection("swipes")
+                        .document(uid)
+                        .setData(documentData) { err in
+                            if let err = err {
+                                print("Fail to save swipe data: ", err)
+                                return
+                            }
+                            
+                            print("successfully saved swiped..")
+                    }
+                }
+        }
     }
     
     fileprivate func performSwipeAnimation(translation: CGFloat, angle: CGFloat) {
@@ -89,11 +137,6 @@ class HomeController: UIViewController {
         
         CATransaction.commit()
     }
-    
-    @objc fileprivate func handleLike() {
-        performSwipeAnimation(translation: 700, angle: 15)
-    }
-    
     // MARK:- Fileprivate
     
     fileprivate var hud = JGProgressHUD(style: .dark)
@@ -139,7 +182,6 @@ class HomeController: UIViewController {
             }
             
             // setup the nextCardView relationship for all cards
-            
             var previousCardView: CardView?
             
             // Get User From FB
