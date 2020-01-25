@@ -64,9 +64,54 @@ class MatchView: UIView {
         setupBlurView()
         
         setupLayout()
+        
+        setupAnimations()
     }
     
     let imageWidth: CGFloat = 140
+    
+    fileprivate func setupAnimations() {
+        let angle = 30 * CGFloat.pi / 180
+        
+        // set starting position
+        currentUserImageView.transform = CGAffineTransform(rotationAngle: -angle)
+            .concatenating(CGAffineTransform(translationX: 200, y: 0))
+        cardUserImageView.transform = CGAffineTransform(rotationAngle: angle)
+        .concatenating(CGAffineTransform(translationX: -200, y: 0))
+        sendMessageButton.transform = CGAffineTransform(translationX: -500, y: 0)
+        keepSwipingButton.transform = CGAffineTransform(translationX: 500, y: 0)
+        
+        // keyframe animation for segmented animation
+        UIView.animateKeyframes(withDuration: 1.3,
+                                delay: 0,
+                                options: .calculationModeCubic,
+                                animations: {
+                                    // animation 1 - translation back to original position
+                                    UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.45) {
+                                        self.currentUserImageView.transform = CGAffineTransform(rotationAngle: -angle)
+                                        self.cardUserImageView.transform = CGAffineTransform(rotationAngle: angle)
+                                    }
+                                    // animation 2 - rotation
+                                    UIView.addKeyframe(withRelativeStartTime: 0.6, relativeDuration: 0.4) {
+                                        self.currentUserImageView.transform = .identity
+                                        self.cardUserImageView.transform = .identity
+                                    }
+        }, completion: { _ in
+            
+        })
+        
+        UIView.animate(withDuration: 0.6,
+                       delay: 0.6 * 1.3,
+                       usingSpringWithDamping: 0.5,
+                       initialSpringVelocity: 0.1,
+                       options: .curveEaseOut,
+                       animations: {
+                        self.sendMessageButton.transform = .identity
+                        self.keepSwipingButton.transform = .identity
+        },
+                       completion: { _ in
+        })
+    }
     
     fileprivate func setupLayout() {
         addSubview(itsMatchImageView)
