@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1A0DE57A23D5D51A0064D091 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A0DE57923D5D51A0064D091 /* GoogleService-Info.plist */; };
+		1A14649323DBE4470069AA3E /* MatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A14649223DBE4470069AA3E /* MatchView.swift */; };
+		1A14649523DBED990069AA3E /* SendMessageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A14649423DBED990069AA3E /* SendMessageButton.swift */; };
+		1A14649723DBF0E50069AA3E /* KeepSwipingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A14649623DBF0E50069AA3E /* KeepSwipingButton.swift */; };
 		1A533B7E23C496D200A6DF35 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A533B7D23C496D200A6DF35 /* Bindable.swift */; };
 		1A58A9EB23C42397002D40E1 /* Advertiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58A9EA23C42397002D40E1 /* Advertiser.swift */; };
 		1A58A9ED23C44FD2002D40E1 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58A9EC23C44FD2002D40E1 /* RegistrationController.swift */; };
@@ -59,6 +62,9 @@
 
 /* Begin PBXFileReference section */
 		1A0DE57923D5D51A0064D091 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1A14649223DBE4470069AA3E /* MatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchView.swift; sourceTree = "<group>"; };
+		1A14649423DBED990069AA3E /* SendMessageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageButton.swift; sourceTree = "<group>"; };
+		1A14649623DBF0E50069AA3E /* KeepSwipingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeepSwipingButton.swift; sourceTree = "<group>"; };
 		1A533B7D23C496D200A6DF35 /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 		1A58A9EA23C42397002D40E1 /* Advertiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertiser.swift; sourceTree = "<group>"; };
 		1A58A9EC23C44FD2002D40E1 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
@@ -149,6 +155,9 @@
 				1A58A9EE23C454D2002D40E1 /* CustomTextField.swift */,
 				1ADB991623C58A3E00CBE803 /* SettingsCell.swift */,
 				1ADB991823C59DDA00CBE803 /* AgeRangeCell.swift */,
+				1A14649223DBE4470069AA3E /* MatchView.swift */,
+				1A14649423DBED990069AA3E /* SendMessageButton.swift */,
+				1A14649623DBF0E50069AA3E /* KeepSwipingButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -532,6 +541,8 @@
 				1A87876923C331D9006A99DD /* HomeBottomControlsStackView.swift in Sources */,
 				1ADB991923C59DDA00CBE803 /* AgeRangeCell.swift in Sources */,
 				1AFB3D4D23C84A26009DF25F /* UserDetailsController.swift in Sources */,
+				1A14649723DBF0E50069AA3E /* KeepSwipingButton.swift in Sources */,
+				1A14649323DBE4470069AA3E /* MatchView.swift in Sources */,
 				1A87877023C41146006A99DD /* User.swift in Sources */,
 				1ADB991523C581E300CBE803 /* SettingsController.swift in Sources */,
 				1A58A9ED23C44FD2002D40E1 /* RegistrationController.swift in Sources */,
@@ -544,6 +555,7 @@
 				1A87876623C32B9F006A99DD /* Extensions.swift in Sources */,
 				1ADB991723C58A3E00CBE803 /* SettingsCell.swift in Sources */,
 				1ADB995C23C5BA0F00CBE803 /* LoginViewModel.swift in Sources */,
+				1A14649523DBED990069AA3E /* SendMessageButton.swift in Sources */,
 				1AFB3D4F23C858FB009DF25F /* SwipingPhotosController.swift in Sources */,
 				1A87877423C416B8006A99DD /* CardViewModel.swift in Sources */,
 			);

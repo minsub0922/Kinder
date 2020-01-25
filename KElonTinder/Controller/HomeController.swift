@@ -48,6 +48,7 @@ class HomeController: UIViewController {
     }
     
     @objc fileprivate func handleRefresh() {
+        cardDeckView.subviews.forEach{ $0.removeFromSuperview() }
         fetchUsersFromFirestore()
     }
 
@@ -73,6 +74,7 @@ class HomeController: UIViewController {
     fileprivate func saveSwipeFirestore(didLike: Int) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         guard let cardUID = topCardView?.cardViewModel.uid else { return }
+        
         let documentData: [String: Any] = [cardUID: didLike]
         
         Firestore.firestore()
@@ -111,6 +113,10 @@ class HomeController: UIViewController {
                             self.checkIfMatchExists(cardUID: cardUID)
                     }
                 }
+                
+                if didLike == 1 {
+                    self.checkIfMatchExists(cardUID: uid)
+                }
         }
     }
     
@@ -130,12 +136,15 @@ class HomeController: UIViewController {
                 let hasMatched = data[uid] as? Int == 1
                 if hasMatched {
                     print("Has matched")
-                    let hud = JGProgressHUD(style: .dark)
-                    hud.textLabel.text = "Found a match"
-                    hud.show(in: self.view)
-                    hud.dismiss(afterDelay: 4)
+                    self.presentMatchView(cardUID: cardUID)
                 }
         }
+    }
+    
+    fileprivate func presentMatchView(cardUID: String) {
+        let matchView = MatchView()
+        view.addSubview(matchView)
+        matchView.fillSuperview()
     }
     
     fileprivate func performSwipeAnimation(translation: CGFloat, angle: CGFloat) {
@@ -237,8 +246,9 @@ class HomeController: UIViewController {
                 let userDictionary = documentSnapshot.data()
                 let user = User(dictionary: userDictionary)
                 let isNotCurrentUser = user.uid != Auth.auth().currentUser?.uid
-                let hasNotSwipeBefore = self.swipes[user.uid!] == nil
-                if  isNotCurrentUser && hasNotSwipeBefore {
+//                let hasNotSwipedBefore = self.swipes[user.uid!] == nil
+                let hasNotSwipedBefore = true
+                if  isNotCurrentUser && hasNotSwipedBefore {
                     let cardView = self.setupCardFromUser(user: user)
                     // use LinkedList Data Structure
                     previousCardView?.nextCardView = cardView
