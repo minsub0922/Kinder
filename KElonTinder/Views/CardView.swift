@@ -44,12 +44,6 @@ class CardView: UIView {
     fileprivate func setupImageIndexObserver() {
         // prevent retain cycle
         cardViewModel.imageIndexObserver = { [unowned self] (idx, imageUrl) in
-            if let url = URL(string: imageUrl ?? "") {
-//                self.swipingPhotosController.view!.sd_setImage(with: url,
-//                                           placeholderImage: #imageLiteral(resourceName: "photo_placeholder"),
-//                                           options: .continueInBackground)
-            }
-            
             self.barsStackView.arrangedSubviews.forEach { v in
                 v.backgroundColor = self.barDeSelectedColor
             }
@@ -115,8 +109,6 @@ class CardView: UIView {
         addSubview(swipingPhotosView)
         swipingPhotosView.fillSuperview()
         
-//        setupBarsStackView()
-
         // add a gradient later somehow
         setupGradientLayer()
         
@@ -136,20 +128,6 @@ class CardView: UIView {
         let stackView = UIStackView()
         return stackView
     }()
-    
-    fileprivate func setupBarsStackView() {
-        addSubview(barsStackView)
-        barsStackView.anchor(top: topAnchor,
-                              leading: leadingAnchor,
-                              bottom: nil,
-                              trailing: trailingAnchor,
-                              padding: .init(top: 8, left: 8, bottom: 0, right: 8),
-                              size: .init(width: 0, height: 4))
-        barsStackView.spacing = 4
-        barsStackView.distribution = .fillEqually
-        // some dummy bars for now
-        
-    }
     
     fileprivate func setupGradientLayer() {
         // draw a gradient
@@ -214,37 +192,12 @@ class CardView: UIView {
                             self.transform = .identity
             })
         }
-        
-        // solution
-        
-        
-//        UIView.animate(withDuration: 0.75,
-//                       delay: 0,
-//                       usingSpringWithDamping: 0.6,
-//                       initialSpringVelocity: 0.1,
-//                       options: .curveEaseOut,
-//                       animations: {
-//                        if shouldDismissCard {
-//                            self.dismiss(translationDirection: translationDirection)
-//                        } else {
-//                            self.transform = .identity
-//                        }
-//        }) { (_) in
-//            self.transform = .identity
-//            if shouldDismissCard {
-//                self.removeFromSuperview()
-//
-//                // reset topCardView inside of HOme Controller
-//                self.delegate?.didRemoveCard(cardView: self)
-//            }
-//        }
     }
     
     required init?(coder: NSCoder) {
         fatalError()
     }
 }
-
 
 // MARK:- Animations
 extension CardView {

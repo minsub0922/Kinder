@@ -95,6 +95,7 @@ class HomeController: UIViewController {
                             }
                             
                             print("successfully saved swiped..")
+                            self.checkIfMatchExists(cardUID: cardUID)
                     }
                 } else {
                     Firestore.firestore()
@@ -107,7 +108,32 @@ class HomeController: UIViewController {
                             }
                             
                             print("successfully saved swiped..")
+                            self.checkIfMatchExists(cardUID: cardUID)
                     }
+                }
+        }
+    }
+    
+    fileprivate func checkIfMatchExists(cardUID: String) {
+        // How to detect our match between two users
+        Firestore.firestore()
+        .collection("swipes")
+        .document(cardUID)
+            .getDocument { (snapshot, err) in
+                if let err  = err {
+                    print("Failed to fetch document for card user: ", err)
+                    return
+                }
+                
+                guard let data = snapshot?.data() else { return }
+                guard let uid = Auth.auth().currentUser?.uid else { return }
+                let hasMatched = data[uid] as? Int == 1
+                if hasMatched {
+                    print("Has matched")
+                    let hud = JGProgressHUD(style: .dark)
+                    hud.textLabel.text = "Found a match"
+                    hud.show(in: self.view)
+                    hud.dismiss(afterDelay: 4)
                 }
         }
     }
@@ -153,8 +179,30 @@ class HomeController: UIViewController {
                 self.hud.dismiss()
                 return
             }
+            
             self.user = user
-            self.fetchUsersFromFirestore()
+            
+            self.fetchSwipes()
+        }
+    }
+    
+    var swipes = [String: Int]()
+    
+    fileprivate func fetchSwipes() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        Firestore.firestore()
+        .collection("swipes")
+        .document(uid)
+            .getDocument { (snapshot, err) in
+                if let err = err {
+                    print("Failed to fetch swipes info for currently logge in user: ", err)
+                    return
+                }
+                
+                print("Swipes: ", snapshot?.data() ?? "")
+                guard let data = snapshot?.data() as? [String: Int] else { return }
+                self.swipes = data
+                self.fetchUsersFromFirestore()
         }
     }
     
@@ -188,7 +236,9 @@ class HomeController: UIViewController {
             snapshot?.documents.forEach({ documentSnapshot in
                 let userDictionary = documentSnapshot.data()
                 let user = User(dictionary: userDictionary)
-                if user.uid != Auth.auth().currentUser?.uid {
+                let isNotCurrentUser = user.uid != Auth.auth().currentUser?.uid
+                let hasNotSwipeBefore = self.swipes[user.uid!] == nil
+                if  isNotCurrentUser && hasNotSwipeBefore {
                     let cardView = self.setupCardFromUser(user: user)
                     // use LinkedList Data Structure
                     previousCardView?.nextCardView = cardView
