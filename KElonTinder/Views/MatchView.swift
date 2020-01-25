@@ -7,8 +7,45 @@
 //
 
 import UIKit
+import Firebase
 
 class MatchView: UIView {
+    
+    // always guaranteed to have this varible set up
+    
+    var currentUser: User! {
+        didSet {
+            guard let url = URL(string: currentUser.imageUrl1 ?? "") else { return }
+            currentUserImageView.sd_setImage(with: url)
+        }
+    }
+    var cardUID: String! {
+        didSet {
+            //fetch the cardUID information
+            let query = Firestore.firestore()
+                .collection("users")
+                .document(cardUID)
+            
+            query.getDocument { (snapshot, err) in
+                if let err = err {
+                    print("Failed to fetch card users: ", err)
+                    return
+                }
+                
+                guard let dictionary = snapshot?.data() else { return }
+                let user = User(dictionary: dictionary)
+                guard let url = URL(string: user.imageUrl1 ?? "") else { return }
+                self.cardUserImageView.sd_setImage(with: url)
+                guard let currentUserImageUrl = URL(string: self.currentUser.imageUrl1 ?? "") else { return }
+                self.currentUserImageView.sd_setImage(with: currentUserImageUrl,
+                                                      completed: { (_,_,_,_) in
+                                                        self.setupAnimations()
+                })
+                
+            }
+        }
+    }
+    
     
     fileprivate let itsMatchImageView: UIImageView = {
         let iv = UIImageView(image: #imageLiteral(resourceName: "itsamatch"))
@@ -41,6 +78,7 @@ class MatchView: UIView {
         imageView.clipsToBounds = true
         imageView.layer.borderWidth = 2
         imageView.layer.borderColor = UIColor.white.cgColor
+        imageView.alpha = 0
         return imageView
     }()
     
@@ -62,15 +100,14 @@ class MatchView: UIView {
         super.init(frame: frame)
         
         setupBlurView()
-        
         setupLayout()
-        
-        setupAnimations()
     }
     
     let imageWidth: CGFloat = 140
     
     fileprivate func setupAnimations() {
+        views.forEach { $0.alpha = 1 }
+        
         let angle = 30 * CGFloat.pi / 180
         
         // set starting position
@@ -113,13 +150,20 @@ class MatchView: UIView {
         })
     }
     
+    lazy var views = [
+        itsMatchImageView,
+        descriptionLabel,
+        sendMessageButton,
+        keepSwipingButton,
+        currentUserImageView,
+        cardUserImageView
+    ]
+    
     fileprivate func setupLayout() {
-        addSubview(itsMatchImageView)
-        addSubview(descriptionLabel)
-        addSubview(sendMessageButton)
-        addSubview(keepSwipingButton)
-        addSubview(currentUserImageView)
-        addSubview(cardUserImageView)
+        views.forEach { v in
+            addSubview(v)
+            v.alpha = 0
+        }
         
         itsMatchImageView.anchor(top: nil,
                                  leading: nil,
