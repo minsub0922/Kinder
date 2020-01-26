@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A08C1AC23DD49D0007EE7A4 /* MatchesMessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A08C1AB23DD49D0007EE7A4 /* MatchesMessagesController.swift */; };
+		1A08C1AE23DD50E9007EE7A4 /* MatchesNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A08C1AD23DD50E9007EE7A4 /* MatchesNavBar.swift */; };
 		1A0DE57A23D5D51A0064D091 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A0DE57923D5D51A0064D091 /* GoogleService-Info.plist */; };
 		1A14649323DBE4470069AA3E /* MatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A14649223DBE4470069AA3E /* MatchView.swift */; };
 		1A14649523DBED990069AA3E /* SendMessageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A14649423DBED990069AA3E /* SendMessageButton.swift */; };
@@ -61,6 +63,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A08C1AB23DD49D0007EE7A4 /* MatchesMessagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesMessagesController.swift; sourceTree = "<group>"; };
+		1A08C1AD23DD50E9007EE7A4 /* MatchesNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesNavBar.swift; sourceTree = "<group>"; };
 		1A0DE57923D5D51A0064D091 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1A14649223DBE4470069AA3E /* MatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchView.swift; sourceTree = "<group>"; };
 		1A14649423DBED990069AA3E /* SendMessageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageButton.swift; sourceTree = "<group>"; };
@@ -137,6 +141,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1A08C1AA23DD49B2007EE7A4 /* MatchesMessages */ = {
+			isa = PBXGroup;
+			children = (
+				1A08C1AB23DD49D0007EE7A4 /* MatchesMessagesController.swift */,
+			);
+			path = MatchesMessages;
+			sourceTree = "<group>";
+		};
 		1A87876423C32B94006A99DD /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -158,6 +170,7 @@
 				1A14649223DBE4470069AA3E /* MatchView.swift */,
 				1A14649423DBED990069AA3E /* SendMessageButton.swift */,
 				1A14649623DBF0E50069AA3E /* KeepSwipingButton.swift */,
+				1A08C1AD23DD50E9007EE7A4 /* MatchesNavBar.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -174,6 +187,7 @@
 		1A87877123C41630006A99DD /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				1A08C1AA23DD49B2007EE7A4 /* MatchesMessages */,
 				1AFB3D4B23C84A12009DF25F /* User Details */,
 				1ADB995823C5B9F800CBE803 /* Login */,
 				1AF2965623BD838600A7FC7F /* HomeController.swift */,
@@ -304,7 +318,7 @@
 				1AF2964B23BD838600A7FC7F /* Sources */,
 				1AF2964C23BD838600A7FC7F /* Frameworks */,
 				1AF2964D23BD838600A7FC7F /* Resources */,
-				E7118F55915A12E68F54BBCA /* [CP] Embed Pods Frameworks */,
+				F858AD36EE18FBD9078A05BA /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -342,7 +356,7 @@
 				1AF2966C23BD838800A7FC7F /* Sources */,
 				1AF2966D23BD838800A7FC7F /* Frameworks */,
 				1AF2966E23BD838800A7FC7F /* Resources */,
-				31EB6B33DBB94F9B7EDE2641 /* [CP] Embed Pods Frameworks */,
+				3A7C6234C8EB5FD72719A8BA /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -426,7 +440,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		31EB6B33DBB94F9B7EDE2641 /* [CP] Embed Pods Frameworks */ = {
+		3A7C6234C8EB5FD72719A8BA /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -509,7 +523,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E7118F55915A12E68F54BBCA /* [CP] Embed Pods Frameworks */ = {
+		F858AD36EE18FBD9078A05BA /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -546,6 +560,8 @@
 				1A87877023C41146006A99DD /* User.swift in Sources */,
 				1ADB991523C581E300CBE803 /* SettingsController.swift in Sources */,
 				1A58A9ED23C44FD2002D40E1 /* RegistrationController.swift in Sources */,
+				1A08C1AC23DD49D0007EE7A4 /* MatchesMessagesController.swift in Sources */,
+				1A08C1AE23DD50E9007EE7A4 /* MatchesNavBar.swift in Sources */,
 				1A87876B23C33575006A99DD /* TopNavigationStackView.swift in Sources */,
 				1A533B7E23C496D200A6DF35 /* Bindable.swift in Sources */,
 				1A58A9EF23C454D2002D40E1 /* CustomTextField.swift in Sources */,

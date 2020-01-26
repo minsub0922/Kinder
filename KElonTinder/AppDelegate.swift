@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         db.settings = settings
         
         window = UIWindow()
-        window?.rootViewController = HomeController()
+        window?.rootViewController = UINavigationController(rootViewController: HomeController())
         window?.makeKeyAndVisible()
         
         return true

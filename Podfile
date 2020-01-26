@@ -12,6 +12,8 @@ target 'KElonTinder' do
   pod 'Firebase/Core’
   pod 'SDWebImage'
   pod 'JGProgressHUD'
+  pod 'LBTATools'
+
 
   target 'KElonTinderTests' do
     inherit! :search_paths

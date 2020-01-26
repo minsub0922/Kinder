@@ -27,8 +27,11 @@ class HomeController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.navigationBar.isHidden = true
+        
         view.backgroundColor = .white
         topStackView.settingsButton.addTarget(self, action: #selector(handleSettings(_:)), for: .touchUpInside)
+        topStackView.messageButton.addTarget(self, action: #selector(handleMessages), for: .touchUpInside)
         bottomControls.refreshButton.addTarget(self, action: #selector(handleRefresh), for: .touchUpInside)
         bottomControls.likeButton.addTarget(self, action: #selector(handleLike), for: .touchUpInside)
         bottomControls.dislikeButton.addTarget(self, action: #selector(handleDislike), for: .touchUpInside)
@@ -43,8 +46,15 @@ class HomeController: UIViewController {
             let registrationController = RegistrationController()
             registrationController.delegate = self
             let navController = UINavigationController(rootViewController: registrationController)
+            navController.modalPresentationStyle = .fullScreen
             present(navController, animated: true)
         }
+    }
+    
+    @objc fileprivate func handleMessages() {
+        let matchesMessagesController = MatchesMessagesController()
+        matchesMessagesController.modalPresentationStyle = .fullScreen
+        navigationController?.pushViewController(matchesMessagesController, animated: true)
     }
     
     @objc fileprivate func handleRefresh() {
@@ -55,8 +65,9 @@ class HomeController: UIViewController {
     @objc fileprivate func handleSettings(_: Any) {
         let settingController = SettingsController()
         settingController.delegate = self
-        let navigationController = UINavigationController(rootViewController: settingController)
-        present(navigationController, animated: true)
+        let navController = UINavigationController(rootViewController: settingController)
+        navController.modalPresentationStyle = .fullScreen
+        present(navController, animated: true)
     }
     
     var topCardView: CardView?
@@ -284,7 +295,7 @@ class HomeController: UIViewController {
                                 trailing: view.trailingAnchor)
         
         overallStackView.isLayoutMarginsRelativeArrangement = true
-        overallStackView.layoutMargins = .init(top: 0, left: 12, bottom: 0, right: 12)
+        overallStackView.layoutMargins = .init(top: 0, left: 12,bottom: 0, right: 12)
         overallStackView.bringSubviewToFront(cardDeckView)
     }
 }
