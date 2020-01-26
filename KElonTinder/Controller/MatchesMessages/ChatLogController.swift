@@ -7,11 +7,7 @@
 //
 
 import LBTATools
-
-struct Message {
-    let text: String
-    let isFromCurrentLoggedUser: Bool
-}
+import Firebase
 
 class MessageCell: LBTAListCell<Message> {
     let textView: UITextView = {
@@ -29,7 +25,7 @@ class MessageCell: LBTAListCell<Message> {
         didSet {
             backgroundColor = .white
             textView.text = item.text
-
+            
             anchoredConstraints.trailing?.isActive = item.isFromCurrentLoggedUser
             anchoredConstraints.leading?.isActive = !item.isFromCurrentLoggedUser
             bubbleContainer.backgroundColor = item.isFromCurrentLoggedUser ? #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) : #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
@@ -70,7 +66,7 @@ class MessagesNavBar: UIView {
         super.init(frame: .zero)
         
         
-       
+        
         setupLayout()
     }
     
@@ -103,7 +99,7 @@ class MessagesNavBar: UIView {
 }
 
 class ChatLogController: LBTAListController<MessageCell, Message>, UICollectionViewDelegateFlowLayout {
-
+    
     fileprivate lazy var customNavBar = MessagesNavBar(match: match)
     
     fileprivate let navBarHeight: CGFloat = 120
@@ -119,10 +115,46 @@ class ChatLogController: LBTAListController<MessageCell, Message>, UICollectionV
         fatalError("init(coder:) has not been implemented")
     }
     
-    // input accessory view for chatting
+    // input accessory view for chatting\
+    lazy var customInputView: CustomInputAccessoryView = {
+        let civ = CustomInputAccessoryView(frame: .init(x: 0, y: 0, width: view.frame.width, height: 50))
+        civ.sendButton.addTarget(self, action: #selector(handleSend), for: .touchUpInside)
+        return civ
+    }()
+    
     override var inputAccessoryView: UIView? {
         get {
-            return CustomInputAccessoryView(frame: .init(x: 0, y: 0, width: view.frame.width, height: 50))
+            return customInputView
+        }
+    }
+    
+    @objc fileprivate func handleSend() {
+        guard let currentUserId = Auth.auth().currentUser?.uid else { return }
+        
+        (0..<2).forEach { i in
+            let currentuserUid = i == 0 ? currentUserId : match.uid
+            let matcherUid = i != 0 ? currentUserId : match.uid
+            
+            let collection = Firestore.firestore()
+                .collection("matches_messages")
+                .document(currentuserUid)
+                .collection(matcherUid)
+            
+            let data = ["text": customInputView.textView.text ?? "",
+                        "fromId": currentuserUid,
+                        "told": matcherUid,
+                        "timestamp": Timestamp(date: Date())] as [String: Any]
+            
+            collection.addDocument(data: data) { err in
+                if let err = err {
+                    print("Failed to save message: ",err)
+                    return
+                }
+                
+                if i == 0 { return }
+                self.customInputView.textView.text = nil
+                self.customInputView.placeholderLabel.isHidden = false
+            }
         }
     }
     
@@ -130,21 +162,46 @@ class ChatLogController: LBTAListController<MessageCell, Message>, UICollectionV
         return true
     }
     
+    fileprivate func fetchMessages() {
+        guard let currentUserId = Auth.auth().currentUser?.uid else { return }
+        let query = Firestore.firestore()
+            .collection("matches_messages")
+            .document(currentUserId)
+            .collection(match.uid)
+            .order(by: "timestamp")
+        
+        // get chat data with realtime
+        query.addSnapshotListener { (querySnapshot, err) in
+            if let err = err {
+                print("Filed to fetch messages: ", err)
+                return
+            }
+            
+            querySnapshot?.documentChanges.forEach { change in
+                if change.type == .added {
+                    self.items.append(.init(dictionary: change.document.data()))
+                }
+            }
+            
+            self.collectionView.reloadData()
+            self.collectionView.scrollToItem(at: [0, self.items.count - 1], at: .bottom, animated: true)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView.keyboardDismissMode = .interactive
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardShow), name: UIResponder.keyboardDidShowNotification, object: nil)
         
+        collectionView.keyboardDismissMode = .interactive
         collectionView.alwaysBounceVertical = true
         
-        // dummy datas
-        items = [
-            .init(text: "Hello everyone i want to say something for you. I am Iron ManHello everyone i want to say something for you. I am Iron ManHello everyone i want to say something for you. I am Iron ManHello everyone i want to say something for you. I am Iron ManHello everyone i want to say something for you. I am Iron ManHello everyone i want to say something for you. I am Iron ManHello everyone i want to say something for you.", isFromCurrentLoggedUser: true),
-            .init(text: "Hello from the Tinder Course", isFromCurrentLoggedUser: false),
-            .init(text: "Hey, What a nice day, Today", isFromCurrentLoggedUser: true)
-        ]
-        
+        fetchMessages()
         setupLayout()
+    }
+    
+    @objc fileprivate func handleKeyboardShow() {
+        self.collectionView.scrollToItem(at: [0, items.count - 1], at: .bottom, animated: true)
     }
     
     fileprivate func setupLayout() {

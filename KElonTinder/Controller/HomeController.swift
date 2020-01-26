@@ -164,7 +164,7 @@ class HomeController: UIViewController {
             
             let data = ["name": cardUser.name ?? "",
                         "profileImageUrl": cardUser.imageUrl1 ?? "",
-                        "uid": cardUID,
+                        "uid": cardUser.uid!,
                         "timestamp": Timestamp(date: Date())] as [String : Any]
             
             Firestore.firestore()
