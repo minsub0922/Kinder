@@ -65,6 +65,7 @@ class SettingsController: UITableViewController {
                 print("Failed to fetch user:", err)
                 return
             }
+            
             self.user = user
             self.loadUserPhotos()
             self.tableView.reloadData()

@@ -17,240 +17,330 @@
 #include "Firestore/core/src/firebase/firestore/local/local_serializer.h"
 
 #include <cstdlib>
+#include <limits>
+#include <memory>
 #include <string>
 #include <utility>
 
 #include "Firestore/Protos/nanopb/firestore/local/maybe_document.nanopb.h"
 #include "Firestore/Protos/nanopb/firestore/local/target.nanopb.h"
-#include "Firestore/Protos/nanopb/google/firestore/v1beta1/document.nanopb.h"
+#include "Firestore/Protos/nanopb/google/firestore/v1/document.nanopb.h"
 #include "Firestore/core/src/firebase/firestore/core/query.h"
 #include "Firestore/core/src/firebase/firestore/model/field_value.h"
 #include "Firestore/core/src/firebase/firestore/model/no_document.h"
 #include "Firestore/core/src/firebase/firestore/model/snapshot_version.h"
-#include "Firestore/core/src/firebase/firestore/nanopb/tag.h"
+#include "Firestore/core/src/firebase/firestore/model/unknown_document.h"
+#include "Firestore/core/src/firebase/firestore/nanopb/byte_string.h"
+#include "Firestore/core/src/firebase/firestore/nanopb/nanopb_util.h"
 #include "Firestore/core/src/firebase/firestore/util/hard_assert.h"
+#include "Firestore/core/src/firebase/firestore/util/string_format.h"
 
 namespace firebase {
 namespace firestore {
 namespace local {
 
-using core::Query;
+namespace {
+
+using core::Target;
 using model::Document;
+using model::DocumentState;
+using model::FieldValue;
 using model::MaybeDocument;
+using model::Mutation;
+using model::MutationBatch;
 using model::NoDocument;
 using model::ObjectValue;
 using model::SnapshotVersion;
+using model::UnknownDocument;
+using nanopb::ByteString;
+using nanopb::CheckedSize;
+using nanopb::MakeArray;
+using nanopb::Message;
 using nanopb::Reader;
-using nanopb::Tag;
+using nanopb::SafeReadBoolean;
 using nanopb::Writer;
 using util::Status;
+using util::StringFormat;
 
-void LocalSerializer::EncodeMaybeDocument(
-    Writer* writer, const MaybeDocument& maybe_doc) const {
+}  // namespace
+
+Message<firestore_client_MaybeDocument> LocalSerializer::EncodeMaybeDocument(
+    const MaybeDocument& maybe_doc) const {
+  Message<firestore_client_MaybeDocument> result;
+
   switch (maybe_doc.type()) {
-    case MaybeDocument::Type::Document:
-      writer->WriteTag(
-          {PB_WT_STRING, firestore_client_MaybeDocument_document_tag});
-      writer->WriteNestedMessage([&](Writer* writer) {
-        EncodeDocument(writer, static_cast<const Document&>(maybe_doc));
-      });
-      return;
+    case MaybeDocument::Type::Document: {
+      result->which_document_type = firestore_client_MaybeDocument_document_tag;
+      Document doc(maybe_doc);
+      // TODO(b/142956770): other platforms check for whether the `Document`
+      // contains a memoized proto and use it if available instead of
+      // re-encoding.
+      result->document = EncodeDocument(doc);
+      result->has_committed_mutations = doc.has_committed_mutations();
+      return result;
+    }
 
-    case MaybeDocument::Type::NoDocument:
-      writer->WriteTag(
-          {PB_WT_STRING, firestore_client_MaybeDocument_no_document_tag});
-      writer->WriteNestedMessage([&](Writer* writer) {
-        EncodeNoDocument(writer, static_cast<const NoDocument&>(maybe_doc));
-      });
-      return;
+    case MaybeDocument::Type::NoDocument: {
+      result->which_document_type =
+          firestore_client_MaybeDocument_no_document_tag;
+      NoDocument no_doc(maybe_doc);
+      result->no_document = EncodeNoDocument(no_doc);
+      result->has_committed_mutations = no_doc.has_committed_mutations();
+      return result;
+    }
 
-    case MaybeDocument::Type::Unknown:
-      // TODO(rsgowman)
-      abort();
+    case MaybeDocument::Type::UnknownDocument:
+      result->which_document_type =
+          firestore_client_MaybeDocument_unknown_document_tag;
+      result->unknown_document =
+          EncodeUnknownDocument(UnknownDocument(maybe_doc));
+      result->has_committed_mutations = true;
+      return result;
+
+    case MaybeDocument::Type::Invalid:
+      HARD_FAIL("Unknown document type %s", maybe_doc.type());
   }
 
   UNREACHABLE();
 }
 
-std::unique_ptr<MaybeDocument> LocalSerializer::DecodeMaybeDocument(
-    Reader* reader) const {
-  std::unique_ptr<MaybeDocument> result;
+MaybeDocument LocalSerializer::DecodeMaybeDocument(
+    Reader* reader, const firestore_client_MaybeDocument& proto) const {
+  if (!reader->status().ok()) return {};
 
-  while (reader->good()) {
-    switch (reader->ReadTag()) {
-      case firestore_client_MaybeDocument_document_tag:
-        // TODO(rsgowman): If multiple 'document' values are found, we should
-        // merge them (rather than using the last one.)
-        result = reader->ReadNestedMessage<Document>(
-            rpc_serializer_, &remote::Serializer::DecodeDocument);
-        break;
+  switch (proto.which_document_type) {
+    case firestore_client_MaybeDocument_document_tag:
+      return DecodeDocument(reader, proto.document,
+                            SafeReadBoolean(proto.has_committed_mutations));
 
-      case firestore_client_MaybeDocument_no_document_tag:
-        // TODO(rsgowman): If multiple 'no_document' values are found, we should
-        // merge them (rather than using the last one.)
-        result = reader->ReadNestedMessage<NoDocument>(
-            *this, &LocalSerializer::DecodeNoDocument);
-        break;
+    case firestore_client_MaybeDocument_no_document_tag:
+      return DecodeNoDocument(reader, proto.no_document,
+                              SafeReadBoolean(proto.has_committed_mutations));
 
-      default:
-        reader->SkipUnknown();
-    }
+    case firestore_client_MaybeDocument_unknown_document_tag:
+      return DecodeUnknownDocument(reader, proto.unknown_document);
+
+    default:
+      reader->Fail(
+          StringFormat("Invalid MaybeDocument document type: %s. Expected "
+                       "'no_document' (%s) or 'document' (%s)",
+                       proto.which_document_type,
+                       firestore_client_MaybeDocument_no_document_tag,
+                       firestore_client_MaybeDocument_document_tag));
+      return {};
   }
 
-  if (!result) {
-    reader->Fail(
-        "Invalid MaybeDocument message: Neither 'no_document' nor 'document' "
-        "fields set.");
-    return nullptr;
+  UNREACHABLE();
+}
+
+google_firestore_v1_Document LocalSerializer::EncodeDocument(
+    const Document& doc) const {
+  google_firestore_v1_Document result{};
+
+  result.name = rpc_serializer_.EncodeKey(doc.key());
+
+  // Encode Document.fields (unless it's empty)
+  pb_size_t count = CheckedSize(doc.data().GetInternalValue().size());
+  result.fields_count = count;
+  result.fields = MakeArray<google_firestore_v1_Document_FieldsEntry>(count);
+  int i = 0;
+  for (const auto& kv : doc.data().GetInternalValue()) {
+    result.fields[i].key = rpc_serializer_.EncodeString(kv.first);
+    result.fields[i].value = rpc_serializer_.EncodeFieldValue(kv.second);
+    i++;
   }
+
+  result.has_update_time = true;
+  result.update_time = rpc_serializer_.EncodeVersion(doc.version());
+  // Ignore Document.create_time. (We don't use this in our on-disk protos.)
+
   return result;
 }
 
-void LocalSerializer::EncodeDocument(Writer* writer,
-                                     const Document& doc) const {
-  // Encode Document.name
-  writer->WriteTag({PB_WT_STRING, google_firestore_v1beta1_Document_name_tag});
-  writer->WriteString(rpc_serializer_.EncodeKey(doc.key()));
+Document LocalSerializer::DecodeDocument(
+    Reader* reader,
+    const google_firestore_v1_Document& proto,
+    bool has_committed_mutations) const {
+  ObjectValue fields =
+      rpc_serializer_.DecodeFields(reader, proto.fields_count, proto.fields);
+  SnapshotVersion version =
+      rpc_serializer_.DecodeVersion(reader, proto.update_time);
 
-  // Encode Document.fields (unless it's empty)
-  const ObjectValue& object_value = doc.data().object_value();
-  if (!object_value.internal_value.empty()) {
-    rpc_serializer_.EncodeObjectMap(
-        writer, object_value.internal_value,
-        google_firestore_v1beta1_Document_fields_tag,
-        google_firestore_v1beta1_Document_FieldsEntry_key_tag,
-        google_firestore_v1beta1_Document_FieldsEntry_value_tag);
-  }
-
-  // Encode Document.update_time
-  writer->WriteTag(
-      {PB_WT_STRING, google_firestore_v1beta1_Document_update_time_tag});
-  writer->WriteNestedMessage([&](Writer* writer) {
-    rpc_serializer_.EncodeVersion(writer, doc.version());
-  });
-
-  // Ignore Document.create_time. (We don't use this in our on-disk protos.)
+  DocumentState state = has_committed_mutations
+                            ? DocumentState::kCommittedMutations
+                            : DocumentState::kSynced;
+  return Document(std::move(fields),
+                  rpc_serializer_.DecodeKey(reader, proto.name), version,
+                  state);
 }
 
-void LocalSerializer::EncodeNoDocument(Writer* writer,
-                                       const NoDocument& no_doc) const {
-  // Encode NoDocument.name
-  writer->WriteTag({PB_WT_STRING, firestore_client_NoDocument_name_tag});
-  writer->WriteString(rpc_serializer_.EncodeKey(no_doc.key()));
+firestore_client_NoDocument LocalSerializer::EncodeNoDocument(
+    const NoDocument& no_doc) const {
+  firestore_client_NoDocument result{};
 
-  // Encode NoDocument.read_time
-  writer->WriteTag({PB_WT_STRING, firestore_client_NoDocument_read_time_tag});
-  writer->WriteNestedMessage([&](Writer* writer) {
-    rpc_serializer_.EncodeVersion(writer, no_doc.version());
-  });
+  result.name = rpc_serializer_.EncodeKey(no_doc.key());
+  result.read_time = rpc_serializer_.EncodeVersion(no_doc.version());
+
+  return result;
 }
 
-std::unique_ptr<NoDocument> LocalSerializer::DecodeNoDocument(
-    Reader* reader) const {
-  std::string name;
-  absl::optional<SnapshotVersion> version = SnapshotVersion::None();
+NoDocument LocalSerializer::DecodeNoDocument(
+    Reader* reader,
+    const firestore_client_NoDocument& proto,
+    bool has_committed_mutations) const {
+  SnapshotVersion version =
+      rpc_serializer_.DecodeVersion(reader, proto.read_time);
 
-  while (reader->good()) {
-    switch (reader->ReadTag()) {
-      case firestore_client_NoDocument_name_tag:
-        name = reader->ReadString();
-        break;
-
-      case firestore_client_NoDocument_read_time_tag:
-        version = reader->ReadNestedMessage<SnapshotVersion>(
-            rpc_serializer_.DecodeSnapshotVersion);
-        break;
-
-      default:
-        reader->SkipUnknown();
-        break;
-    }
-  }
-
-  if (!reader->status().ok()) return nullptr;
-  return absl::make_unique<NoDocument>(rpc_serializer_.DecodeKey(name),
-                                       *std::move(version));
+  return NoDocument(rpc_serializer_.DecodeKey(reader, proto.name), version,
+                    has_committed_mutations);
 }
 
-void LocalSerializer::EncodeQueryData(Writer* writer,
-                                      const QueryData& query_data) const {
-  writer->WriteTag({PB_WT_VARINT, firestore_client_Target_target_id_tag});
-  writer->WriteInteger(query_data.target_id());
+firestore_client_UnknownDocument LocalSerializer::EncodeUnknownDocument(
+    const UnknownDocument& unknown_doc) const {
+  firestore_client_UnknownDocument result{};
 
-  writer->WriteTag(
-      {PB_WT_STRING, firestore_client_Target_snapshot_version_tag});
-  writer->WriteNestedMessage([&](Writer* writer) {
-    rpc_serializer_.EncodeTimestamp(writer,
-                                    query_data.snapshot_version().timestamp());
-  });
+  result.name = rpc_serializer_.EncodeKey(unknown_doc.key());
+  result.version = rpc_serializer_.EncodeVersion(unknown_doc.version());
 
-  writer->WriteTag({PB_WT_STRING, firestore_client_Target_resume_token_tag});
-  writer->WriteBytes(query_data.resume_token());
+  return result;
+}
 
-  const Query& query = query_data.query();
-  if (query.IsDocumentQuery()) {
-    // TODO(rsgowman): Implement. Probably like this (once EncodeDocumentsTarget
-    // exists):
-    /*
-    writer->WriteTag({PB_WT_STRING, firestore_client_Target_documents_tag});
-    writer->WriteNestedMessage([&](Writer* writer) {
-      rpc_serializer_.EncodeDocumentsTarget(writer, query);
-    });
-    */
-    abort();
+UnknownDocument LocalSerializer::DecodeUnknownDocument(
+    Reader* reader, const firestore_client_UnknownDocument& proto) const {
+  SnapshotVersion version =
+      rpc_serializer_.DecodeVersion(reader, proto.version);
+
+  return UnknownDocument(rpc_serializer_.DecodeKey(reader, proto.name),
+                         version);
+}
+
+Message<firestore_client_Target> LocalSerializer::EncodeQueryData(
+    const QueryData& query_data) const {
+  HARD_ASSERT(query_data.purpose() == QueryPurpose::Listen,
+              "Only queries with purpose %s may be stored, got %s",
+              QueryPurpose::Listen, query_data.purpose());
+
+  Message<firestore_client_Target> result;
+
+  result->target_id = query_data.target_id();
+  result->last_listen_sequence_number = query_data.sequence_number();
+  result->snapshot_version = rpc_serializer_.EncodeTimestamp(
+      query_data.snapshot_version().timestamp());
+  result->last_limbo_free_snapshot_version = rpc_serializer_.EncodeTimestamp(
+      query_data.last_limbo_free_snapshot_version().timestamp());
+
+  // Force a copy because pb_release would otherwise double-free.
+  result->resume_token =
+      nanopb::CopyBytesArray(query_data.resume_token().get());
+
+  const Target& target = query_data.target();
+  if (target.IsDocumentQuery()) {
+    result->which_target_type = firestore_client_Target_documents_tag;
+    result->documents = rpc_serializer_.EncodeDocumentsTarget(target);
   } else {
-    writer->WriteTag({PB_WT_STRING, firestore_client_Target_query_tag});
-    writer->WriteNestedMessage([&](Writer* writer) {
-      rpc_serializer_.EncodeQueryTarget(writer, query);
-    });
+    result->which_target_type = firestore_client_Target_query_tag;
+    result->query = rpc_serializer_.EncodeQueryTarget(target);
   }
+
+  return result;
 }
 
-absl::optional<QueryData> LocalSerializer::DecodeQueryData(
-    Reader* reader) const {
-  model::TargetId target_id = 0;
-  absl::optional<SnapshotVersion> version = SnapshotVersion::None();
-  std::vector<uint8_t> resume_token;
-  absl::optional<Query> query = Query::Invalid();
+QueryData LocalSerializer::DecodeQueryData(
+    Reader* reader, const firestore_client_Target& proto) const {
+  if (!reader->status().ok()) return QueryData::Invalid();
 
-  while (reader->good()) {
-    switch (reader->ReadTag()) {
-      case firestore_client_Target_target_id_tag:
-        // TODO(rsgowman): How to handle truncation of integer types?
-        target_id = static_cast<model::TargetId>(reader->ReadInteger());
-        break;
+  model::TargetId target_id = proto.target_id;
+  model::ListenSequenceNumber sequence_number =
+      static_cast<model::ListenSequenceNumber>(
+          proto.last_listen_sequence_number);
+  SnapshotVersion version =
+      rpc_serializer_.DecodeVersion(reader, proto.snapshot_version);
+  SnapshotVersion last_limbo_free_snapshot_version =
+      rpc_serializer_.DecodeVersion(reader,
+                                    proto.last_limbo_free_snapshot_version);
+  ByteString resume_token(proto.resume_token);
+  Target target;
 
-      case firestore_client_Target_snapshot_version_tag:
-        version = reader->ReadNestedMessage<SnapshotVersion>(
-            rpc_serializer_.DecodeSnapshotVersion);
-        break;
+  switch (proto.which_target_type) {
+    case firestore_client_Target_query_tag:
+      target = rpc_serializer_.DecodeQueryTarget(reader, proto.query);
+      break;
 
-      case firestore_client_Target_resume_token_tag:
-        resume_token = reader->ReadBytes();
-        break;
+    case firestore_client_Target_documents_tag:
+      target = rpc_serializer_.DecodeDocumentsTarget(reader, proto.documents);
+      break;
 
-      case firestore_client_Target_query_tag:
-        // TODO(rsgowman): Clear 'documents' field (since query and documents
-        // are part of a 'oneof').
-        query =
-            reader->ReadNestedMessage<Query>(rpc_serializer_.DecodeQueryTarget);
-        break;
-
-      case firestore_client_Target_documents_tag:
-        // Clear 'query' field (since query and documents are part of a 'oneof')
-        query = Query::Invalid();
-        // TODO(rsgowman): Implement.
-        abort();
-
-      default:
-        reader->SkipUnknown();
-        break;
-    }
+    default:
+      reader->Fail(
+          StringFormat("Unknown target_type: %s", proto.which_target_type));
   }
 
-  if (!reader->status().ok()) return absl::nullopt;
-  return QueryData(*std::move(query), target_id, QueryPurpose::kListen,
-                   *std::move(version), std::move(resume_token));
+  if (!reader->status().ok()) return QueryData::Invalid();
+  return QueryData(std::move(target), target_id, sequence_number,
+                   QueryPurpose::Listen, version,
+                   last_limbo_free_snapshot_version, std::move(resume_token));
+}
+
+Message<firestore_client_WriteBatch> LocalSerializer::EncodeMutationBatch(
+    const MutationBatch& mutation_batch) const {
+  Message<firestore_client_WriteBatch> result;
+
+  result->batch_id = mutation_batch.batch_id();
+
+  pb_size_t count = CheckedSize(mutation_batch.base_mutations().size());
+  result->base_writes_count = count;
+  result->base_writes = MakeArray<google_firestore_v1_Write>(count);
+  int i = 0;
+  for (const auto& mutation : mutation_batch.base_mutations()) {
+    result->base_writes[i] = rpc_serializer_.EncodeMutation(mutation);
+    i++;
+  }
+
+  count = CheckedSize(mutation_batch.mutations().size());
+  result->writes_count = count;
+  result->writes = MakeArray<google_firestore_v1_Write>(count);
+  i = 0;
+  for (const auto& mutation : mutation_batch.mutations()) {
+    result->writes[i] = rpc_serializer_.EncodeMutation(mutation);
+    i++;
+  }
+
+  result->local_write_time =
+      rpc_serializer_.EncodeTimestamp(mutation_batch.local_write_time());
+
+  return result;
+}
+
+MutationBatch LocalSerializer::DecodeMutationBatch(
+    nanopb::Reader* reader, const firestore_client_WriteBatch& proto) const {
+  int batch_id = proto.batch_id;
+  Timestamp local_write_time =
+      rpc_serializer_.DecodeTimestamp(reader, proto.local_write_time);
+
+  std::vector<Mutation> base_mutations;
+  for (size_t i = 0; i < proto.base_writes_count; i++) {
+    base_mutations.push_back(
+        rpc_serializer_.DecodeMutation(reader, proto.base_writes[i]));
+  }
+
+  std::vector<Mutation> mutations;
+  for (size_t i = 0; i < proto.writes_count; i++) {
+    mutations.push_back(
+        rpc_serializer_.DecodeMutation(reader, proto.writes[i]));
+  }
+
+  return MutationBatch(batch_id, local_write_time, std::move(base_mutations),
+                       std::move(mutations));
+}
+
+google_protobuf_Timestamp LocalSerializer::EncodeVersion(
+    const model::SnapshotVersion& version) const {
+  return rpc_serializer_.EncodeVersion(version);
+}
+
+model::SnapshotVersion LocalSerializer::DecodeVersion(
+    nanopb::Reader* reader, const google_protobuf_Timestamp& proto) const {
+  return rpc_serializer_.DecodeVersion(reader, proto);
 }
 
 }  // namespace local

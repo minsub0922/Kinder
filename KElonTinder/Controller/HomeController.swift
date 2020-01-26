@@ -72,6 +72,8 @@ class HomeController: UIViewController {
     
     var topCardView: CardView?
     
+    var users = [String: User]()
+    
     @objc func handleDislike() {
         saveSwipeFirestore(didLike: 0)
         performSwipeAnimation(translation: -700, angle: -15)
@@ -148,7 +150,34 @@ class HomeController: UIViewController {
                 if hasMatched {
                     print("Has matched")
                     self.presentMatchView(cardUID: cardUID)
+                    self.uploadMatchInfo(cardUID: cardUID)
                 }
+        }
+    }
+    
+    fileprivate func uploadMatchInfo(cardUID: String) {
+        (0..<2).forEach { i in
+            guard
+                let cardUser = i == 0 ? self.users[cardUID] : self.user,
+                let currentUser = i == 0 ? self.user : self.users[cardUID]
+                else { return }
+            
+            let data = ["name": cardUser.name ?? "",
+                        "profileImageUrl": cardUser.imageUrl1 ?? "",
+                        "uid": cardUID,
+                        "timestamp": Timestamp(date: Date())] as [String : Any]
+            
+            Firestore.firestore()
+                .collection("matches_messages")
+                .document(currentUser.uid!)
+                .collection("matches")
+                .document(cardUser.uid!)
+                .setData(data) { err in
+                    if let err = err {
+                        print("Failed to save match info: ", err)
+                        return
+                    }
+            }
         }
     }
     
@@ -258,6 +287,9 @@ class HomeController: UIViewController {
             snapshot?.documents.forEach({ documentSnapshot in
                 let userDictionary = documentSnapshot.data()
                 let user = User(dictionary: userDictionary)
+                
+                self.users[user.uid ?? ""] = user
+                
                 let isNotCurrentUser = user.uid != Auth.auth().currentUser?.uid
 //                let hasNotSwipedBefore = self.swipes[user.uid!] == nil
                 let hasNotSwipedBefore = true

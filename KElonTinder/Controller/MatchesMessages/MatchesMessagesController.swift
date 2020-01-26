@@ -8,8 +8,18 @@
 
 import UIKit
 import LBTATools
+import Firebase
 
-class MatchCell: LBTAListCell<UIColor> {
+struct Match {
+    let name, profileImageUrl: String
+    
+    init(dictionary: [String: Any]) {
+        self.name = dictionary["name"] as? String ?? ""
+        self.profileImageUrl = dictionary["profileImageUrl"] as? String ?? ""
+    }
+}
+
+class MatchCell: LBTAListCell<Match> {
     
     let profileImageView = UIImageView(image: #imageLiteral(resourceName: "kelly1"), contentMode: .scaleAspectFill)
     let usernameLabel = UILabel(text: "Username Here",
@@ -18,9 +28,10 @@ class MatchCell: LBTAListCell<UIColor> {
                                 textAlignment: .center,
                                 numberOfLines: 2)
     
-    override var item: UIColor! {
+    override var item: Match! {
         didSet {
-            backgroundColor = item
+            usernameLabel.text = item.name
+            profileImageView.sd_setImage(with: URL(string: item.profileImageUrl))
         }
     }
     
@@ -37,7 +48,7 @@ class MatchCell: LBTAListCell<UIColor> {
 }
 
 
-class MatchesMessagesController: LBTAListController<MatchCell, UIColor>, UICollectionViewDelegateFlowLayout {
+class MatchesMessagesController: LBTAListController<MatchCell, Match>, UICollectionViewDelegateFlowLayout {
 
     let customNavBar = MatchesNavBar()
     
@@ -45,14 +56,15 @@ class MatchesMessagesController: LBTAListController<MatchCell, UIColor>, UIColle
         return .init(width: 100, height: 120)
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return .init(top: 16, left: 0, bottom: 16, right: 0)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        items = [
-            .red, .blue, .green
-        ]
+        fetchMatches()
         
-        //collectionView.register(<#T##cellClass: AnyClass?##AnyClass?#>, forCellWithReuseIdentifier: <#T##String#>)
         collectionView.backgroundColor = .white
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -66,6 +78,31 @@ class MatchesMessagesController: LBTAListController<MatchCell, UIColor>, UIColle
                             size: .init(width: 0, height: 150))
         
         collectionView.contentInset.top = 150
+    }
+    
+    fileprivate func fetchMatches() {
+        guard let currentUserId = Auth.auth().currentUser?.uid else { return }
+        
+        Firestore.firestore()
+            .collection("matches_messages")
+            .document(currentUserId)
+            .collection("matches")
+            .getDocuments { (querySnapshot, err) in
+                if let err = err {
+                    print("Failed to fetch matches: ", err)
+                    return
+                }
+                
+                var matches = [Match]()
+                
+                querySnapshot?.documents.forEach({ (snapshot) in
+                    let dictionary = snapshot.data()
+                    matches.append(.init(dictionary: dictionary))
+                })
+                
+                self.items = matches
+                self.collectionView.reloadData()
+        }
     }
     
     @objc fileprivate func handleBack() {
