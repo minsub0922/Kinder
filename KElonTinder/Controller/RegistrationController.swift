@@ -171,7 +171,6 @@ class RegistrationController: UIViewController {
         }
     }
     
-    
     fileprivate func setupTapGesture() {
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapDismiss)))
     }

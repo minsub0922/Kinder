@@ -18,6 +18,9 @@
 		1A14649723DBF0E50069AA3E /* KeepSwipingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A14649623DBF0E50069AA3E /* KeepSwipingButton.swift */; };
 		1A1B567023DFE28C00C51E53 /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1B566F23DFE28C00C51E53 /* Match.swift */; };
 		1A1B567223DFE2A400C51E53 /* MatchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1B567123DFE2A400C51E53 /* MatchCell.swift */; };
+		1A1B567423DFF23500C51E53 /* MatchesHorizontalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1B567323DFF23500C51E53 /* MatchesHorizontalController.swift */; };
+		1A1B567623E003CD00C51E53 /* MessageNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1B567523E003CD00C51E53 /* MessageNavBar.swift */; };
+		1A1B567823E003F400C51E53 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1B567723E003F400C51E53 /* MessageCell.swift */; };
 		1A533B7E23C496D200A6DF35 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A533B7D23C496D200A6DF35 /* Bindable.swift */; };
 		1A58A9EB23C42397002D40E1 /* Advertiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58A9EA23C42397002D40E1 /* Advertiser.swift */; };
 		1A58A9ED23C44FD2002D40E1 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58A9EC23C44FD2002D40E1 /* RegistrationController.swift */; };
@@ -79,6 +82,9 @@
 		1A14649623DBF0E50069AA3E /* KeepSwipingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeepSwipingButton.swift; sourceTree = "<group>"; };
 		1A1B566F23DFE28C00C51E53 /* Match.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
 		1A1B567123DFE2A400C51E53 /* MatchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchCell.swift; sourceTree = "<group>"; };
+		1A1B567323DFF23500C51E53 /* MatchesHorizontalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesHorizontalController.swift; sourceTree = "<group>"; };
+		1A1B567523E003CD00C51E53 /* MessageNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageNavBar.swift; sourceTree = "<group>"; };
+		1A1B567723E003F400C51E53 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		1A533B7D23C496D200A6DF35 /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 		1A58A9EA23C42397002D40E1 /* Advertiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertiser.swift; sourceTree = "<group>"; };
 		1A58A9EC23C44FD2002D40E1 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
@@ -156,6 +162,7 @@
 			children = (
 				1A08C1AB23DD49D0007EE7A4 /* MatchesMessagesController.swift */,
 				1A08C1AF23DD62E8007EE7A4 /* ChatLogController.swift */,
+				1A1B567323DFF23500C51E53 /* MatchesHorizontalController.swift */,
 			);
 			path = MatchesMessages;
 			sourceTree = "<group>";
@@ -184,6 +191,8 @@
 				1A08C1AD23DD50E9007EE7A4 /* MatchesNavBar.swift */,
 				1A08C1B123DD787F007EE7A4 /* CustomAccessoryView.swift */,
 				1A1B567123DFE2A400C51E53 /* MatchCell.swift */,
+				1A1B567523E003CD00C51E53 /* MessageNavBar.swift */,
+				1A1B567723E003F400C51E53 /* MessageCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -563,10 +572,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				1ADB995E23C5C13C00CBE803 /* Firebase+Utils.swift in Sources */,
+				1A1B567423DFF23500C51E53 /* MatchesHorizontalController.swift in Sources */,
 				1A58A9EB23C42397002D40E1 /* Advertiser.swift in Sources */,
 				1A87876D23C370D5006A99DD /* CardView.swift in Sources */,
 				1AF2965723BD838600A7FC7F /* HomeController.swift in Sources */,
 				1AF2965323BD838600A7FC7F /* AppDelegate.swift in Sources */,
+				1A1B567823E003F400C51E53 /* MessageCell.swift in Sources */,
 				1A87876923C331D9006A99DD /* HomeBottomControlsStackView.swift in Sources */,
 				1ADB991923C59DDA00CBE803 /* AgeRangeCell.swift in Sources */,
 				1AFB3D4D23C84A26009DF25F /* UserDetailsController.swift in Sources */,
@@ -586,6 +597,7 @@
 				1AF2965523BD838600A7FC7F /* SceneDelegate.swift in Sources */,
 				1A1B567023DFE28C00C51E53 /* Match.swift in Sources */,
 				1A1B567223DFE2A400C51E53 /* MatchCell.swift in Sources */,
+				1A1B567623E003CD00C51E53 /* MessageNavBar.swift in Sources */,
 				1A87876623C32B9F006A99DD /* Extensions.swift in Sources */,
 				1ADB991723C58A3E00CBE803 /* SettingsCell.swift in Sources */,
 				1ADB995C23C5BA0F00CBE803 /* LoginViewModel.swift in Sources */,

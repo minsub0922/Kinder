@@ -57,6 +57,10 @@ class SettingsController: UITableViewController {
         fetchCurrentUser()
     }
     
+    deinit {
+        print("\(self.className) is destroying itsel properly, no retain cycles or any other memory related issues. Meemory being reclaimed properly")
+    }
+    
     var user: User?
     
     fileprivate func fetchCurrentUser() {

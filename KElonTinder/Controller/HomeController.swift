@@ -251,8 +251,10 @@ class HomeController: UIViewController {
                 }
                 
                 print("Swipes: ", snapshot?.data() ?? "")
-                guard let data = snapshot?.data() as? [String: Int] else { return }
-                self.swipes = data
+                if let data = snapshot?.data() as? [String: Int] {
+                    self.swipes = data
+                }
+                
                 self.fetchUsersFromFirestore()
         }
     }
@@ -276,7 +278,7 @@ class HomeController: UIViewController {
             self.hud.dismiss()
             
             if let err = err {
-                print(err)
+                print("Failed to get users: ",err)
                 return
             }
             
